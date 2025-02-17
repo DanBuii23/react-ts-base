@@ -1,8 +1,6 @@
 import { Button, ButtonProps } from 'antd'
 
-interface MButtonProps extends ButtonProps {}
-
-const MButton = ({ children, ...props }: MButtonProps) => {
+const MButton = ({ children, ...props }: ButtonProps) => {
   return <Button {...props}>{children}</Button>
 }
 

@@ -1,10 +1,15 @@
-import { Button } from 'antd'
+import React from 'react'
+import AppHeader from '../../organisms/Header'
+import Sidebar from '../../organisms/Sidebar'
+import { Navigate, Route, Routes } from 'react-router-dom'
+import AppFooter from '../../organisms/Footer'
+import ManageProduct from '../../organisms/ManageProduct'
+import Content from '../../organisms/Content'
 
 const HomePage = () => {
   return (
-    <div className='App'>
-      <h1 className='text-3xl font-bold underline'>Hello world!</h1>
-      <Button type='primary'>Button</Button>
+    <div>
+      <Content />
     </div>
   )
 }
