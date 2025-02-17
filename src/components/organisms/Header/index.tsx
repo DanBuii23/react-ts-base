@@ -1,9 +1,10 @@
 import React from 'react'
 import { Button, Layout } from 'antd'
-
+import { useAuth } from '../../../contexts/AuthContext'
 const { Header } = Layout
 
 const AppHeader = () => {
+  const { logout } = useAuth()
   return (
     <Header className='mx-auto flex justify-between items-center bg-blue-900 shadow-md px-6'>
       {/* Logo */}
@@ -17,7 +18,9 @@ const AppHeader = () => {
         <button className='font-bold text-white hover:text-red-400'>About</button>
         <button className='font-bold text-white hover:text-red-400'>Contact</button>
         <div className='font-bold text-white'>
-          <Button type='primary'>Đăng nhập</Button>
+          <Button type='primary' onClick={logout}>
+            Đăng xuất
+          </Button>
         </div>
       </div>
     </Header>

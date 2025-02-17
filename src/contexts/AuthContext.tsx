@@ -1,4 +1,5 @@
 import { createContext, useContext, ReactNode, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 interface AuthContextType {
   accessToken: string
@@ -11,20 +12,27 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [accessToken, setAccessToken] = useState<string>('')
-
-  const [user, setUser] = useState<string | null>(null)
+  const [accessToken, setAccessToken] = useState<string>(localStorage.getItem('accessToken') || '')
+  const [user, setUser] = useState<string | null>(localStorage.getItem('user') || null)
+  const navigate = useNavigate() // Dùng để điều hướng
 
   const login = (username: string) => {
-    // Implement login logic here
+    // Giả lập đăng nhập thành công và lưu token
+    const token = 'dummy-token' // Thay bằng token thực tế từ API
+    localStorage.setItem('accessToken', token)
+    localStorage.setItem('user', username)
+    setAccessToken(token)
     setUser(username)
-    setAccessToken('dummy-token') // Replace with actual token
+    navigate('/') // Chuyển về trang chủ sau khi đăng nhập
   }
 
   const logout = () => {
-    // Implement logout logic here
-    setUser(null)
+    // Xóa token khỏi localStorage và reset state
+    localStorage.removeItem('accessToken')
+    localStorage.removeItem('user')
     setAccessToken('')
+    setUser(null)
+    navigate('/login') // Chuyển hướng về trang login
   }
 
   const value = {
@@ -41,7 +49,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 export const useAuth = () => {
   const context = useContext(AuthContext)
   if (!context) {
-    throw new Error('useAuthContext must be used within a AuthProvider')
+    throw new Error('useAuth must be used within an AuthProvider')
   }
   return context
 }
