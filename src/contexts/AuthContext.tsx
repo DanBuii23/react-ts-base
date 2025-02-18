@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom'
 
 interface AuthContextType {
   accessToken: string
-  setAccessToken: (token: string) => void
   user: string | null
+  loading: boolean
   login: (username: string, password: string) => void
   logout: () => void
 }
@@ -15,20 +15,28 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [accessToken, setAccessToken] = useState<string>(localStorage.getItem('accessToken') || '')
   const [user, setUser] = useState<string | null>(localStorage.getItem('user') || null)
+  const [loading, setLoading] = useState<boolean>(false)
   const navigate = useNavigate()
 
-  const login = (username: string) => {
-    // Giả lập đăng nhập thành công và lưu token
-    const token = 'dummy-token' // Thay bằng token thực tế từ API
-    localStorage.setItem('accessToken', token)
-    localStorage.setItem('user', username)
-    setAccessToken(token)
-    setUser(username)
-    navigate('/') // Chuyển về trang chủ sau khi đăng nhập
+  const login = (username: string, password: string) => {
+    setLoading(true)
+    setTimeout(() => {
+      if (username === 'ad' && password === '1') {
+        const token = 'dummy-token' // Giả lập token
+        localStorage.setItem('accessToken', token)
+        localStorage.setItem('user', username)
+        setAccessToken(token)
+        setUser(username)
+        message.success('Đăng nhập thành công!')
+        navigate('/')
+      } else {
+        message.error('Sai tài khoản hoặc mật khẩu!')
+      }
+      setLoading(false)
+    }, 1000) // Giả lập delay API
   }
 
   const logout = () => {
-    // Xóa token khỏi localStorage và reset state
     localStorage.removeItem('accessToken')
     localStorage.removeItem('user')
     setAccessToken('')
@@ -37,15 +45,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     navigate('/login', { replace: true })
   }
 
-  const value = {
-    accessToken,
-    setAccessToken,
-    user,
-    login,
-    logout
-  }
-
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
+  return <AuthContext.Provider value={{ accessToken, user, loading, login, logout }}>{children}</AuthContext.Provider>
 }
 
 export const useAuth = () => {

@@ -7,40 +7,34 @@ import AppFooter from '../components/organisms/Footer'
 import ProductList from '../components/organisms/Content'
 import { useAuth } from '../contexts/AuthContext'
 
-const ProtectedRoute = () => {
-  const { accessToken } = useAuth() // Kiểm tra người dùng đã đăng nhập hay chưa (kiểm tra accessToken)
-
-  // Nếu không có accessToken, tức là chưa đăng nhập thì chuyển hướng tới trang login
-  if (!accessToken) {
-    return <Navigate to='/login' replace />
-  }
-
-  // Nếu có accessToken, cho phép người dùng truy cập vào route cần bảo vệ
-  return <Outlet />
-}
-
+// Layout chính có kiểm tra đăng nhập
 const Layout = () => {
+  const { accessToken } = useAuth()
+
+  if (!accessToken) return <Navigate to='/login' replace />
+
   return (
     <div>
       <AppHeader />
       <div className='flex'>
         <Sidebar />
-        <Outlet />
+        <div className='flex-1 p-4'>
+          <Outlet />
+        </div>
       </div>
       <AppFooter />
     </div>
   )
 }
 
-function AppRoutes() {
+// Khai báo Router
+const AppRoutes = () => {
   return (
     <Routes>
       <Route path='/login' element={<Login />} />
-      <Route element={<ProtectedRoute />}>
-        <Route element={<Layout />}>
-          <Route path='/' element={<HomePage />} />
-          <Route path='/categories/:id' element={<ProductList />} />
-        </Route>
+      <Route element={<Layout />}>
+        <Route path='/' element={<HomePage />} />
+        <Route path='/categories/:id' element={<ProductList />} />
       </Route>
     </Routes>
   )
