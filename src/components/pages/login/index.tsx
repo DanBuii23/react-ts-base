@@ -9,8 +9,8 @@ import bgtech from '../../../../public/images/bgtechno.jpg'
 
 const Login = () => {
   const { login, accessToken } = useAuth()
-  const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
+  const [loading, setLoading] = useState(false)
 
   if (accessToken) return <Navigate to='/' replace />
 

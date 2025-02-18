@@ -64,22 +64,6 @@ export default function ProductList() {
                 Mua ngay
               </Button>
             </div>
-            <div className='flex gap-2 p-2'>
-              <Button
-                block
-                className='flex items-center justify-center gap-2 border shadow-md p-3 hover:bg-slate-500'
-                type='text'
-              >
-                Sửa
-              </Button>
-              <Button
-                block
-                className='flex items-center justify-center gap-2 border shadow-sm p-2 hover:bg-slate-500'
-                type='dashed'
-              >
-                Xóa
-              </Button>
-            </div>
           </div>
         ))}
       </div>

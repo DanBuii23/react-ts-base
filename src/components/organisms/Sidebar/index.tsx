@@ -4,7 +4,12 @@ import { Link } from 'react-router-dom'
 
 export default function Sidebar() {
   const [collapsed, setCollapsed] = useState(false)
-  const [categories, setCategories] = useState<any[]>([])
+  interface Category {
+    id: number
+    name: string
+  }
+
+  const [categories, setCategories] = useState<Category[]>([])
 
   useEffect(() => {
     const fetchProduct = async () => {
