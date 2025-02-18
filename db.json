@@ -68,7 +68,7 @@
           "image": "/images/akko-anime.jpg",
           "alt": "Bàn phím Akko OnePiece"
         },
-        { "id": 23, "image": "images/havit.jpg", "alt": "Bàn phím Havit" },
+        { "id": 23, "image": "/images/havit.jpg", "alt": "Bàn phím Havit" },
         {
           "id": 24,
           "image": "/images/logitech.jpg",

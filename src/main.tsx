@@ -6,11 +6,9 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import { AuthProvider } from './contexts/AuthContext.tsx'
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <Router>
-      <AuthProvider>
-        <AppRoutes />
-      </AuthProvider>
-    </Router>
-  </StrictMode>
+  <Router>
+    <AuthProvider>
+      <AppRoutes />
+    </AuthProvider>
+  </Router>
 )

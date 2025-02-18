@@ -29,7 +29,6 @@ const Login = () => {
   return (
     <div className='bg-cover bg-center h-screen' style={{ backgroundImage: `url(${bgtech})` }}>
       <div className='container mx-auto flex items-center justify-center h-screen px-8'>
-        {/* Form đăng nhập (thu nhỏ 60%) */}
         <div className='w-full w-[60%] max-w-md p-8 bg-white shadow-xl rounded-lg'>
           <h2 className='text-3xl font-bold text-center m-3 text-gray-800'>Login</h2>
           <Form name='login' initialValues={{ remember: true }} onFinish={onFinish} layout='vertical'>
@@ -71,7 +70,6 @@ const Login = () => {
           </h1>
         </div>
 
-        {/* Ảnh minh họa (tăng kích thước lên 130%) */}
         <div className='flex w-1/2 justify-center'>
           <img src={imgLogin} alt='login' className='object-contain rounded-lg shadow-lg scale-[1.4]' />
         </div>

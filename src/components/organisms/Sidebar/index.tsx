@@ -7,7 +7,7 @@ export default function Sidebar() {
   const [categories, setCategories] = useState<any[]>([])
 
   useEffect(() => {
-    const fetchCategories = async () => {
+    const fetchProduct = async () => {
       try {
         const response = await fetch('http://localhost:5000/categories')
         const data = await response.json()
@@ -16,19 +16,19 @@ export default function Sidebar() {
         console.error('Lỗi:', error)
       }
     }
-    fetchCategories()
+    fetchProduct()
   }, [])
 
   // Cấu trúc lại items để sử dụng với Menu
   const menuItems = categories.map((cat) => ({
-    key: cat.id.toString(),
+    key: cat.id,
     label: <Link to={`/categories/${cat.id}`}>{cat.name}</Link>
   }))
 
   return (
     <div className='flex'>
-      <div className={`h-screen bg-white shadow-lg transition-all ${collapsed ? 'w-24' : 'w-60'} p-2`}>
-        <button className='mb-4 p-2 w-full bg-blue-500 text-white rounded-lg' onClick={() => setCollapsed(!collapsed)}>
+      <div className={`h-full bg-white shadow-lg transition-all ${collapsed ? 'w-24' : 'w-60'} p-2`}>
+        <button className='mb-4 p-2 w-full bg-slate-900 text-white rounded-md' onClick={() => setCollapsed(!collapsed)}>
           {collapsed ? '>' : '<'}
         </button>
         <h1>Danh mục</h1>

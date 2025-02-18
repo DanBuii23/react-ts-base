@@ -1,3 +1,4 @@
+import { message } from 'antd'
 import { createContext, useContext, ReactNode, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -32,6 +33,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     localStorage.removeItem('user')
     setAccessToken('')
     setUser(null)
+    message.success('Đăng xuất thành công!')
     navigate('/login') // Chuyển hướng về trang login
   }
 
