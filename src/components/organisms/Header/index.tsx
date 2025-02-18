@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Input, Layout } from 'antd'
+import { Button, Layout } from 'antd'
 import imglogo from '../../../../public/images/login.jpg'
 import { useAuth } from '../../../contexts/AuthContext'
 import { Link } from 'react-router-dom'
@@ -29,10 +29,10 @@ const AppHeader = () => {
         <button className='text-white hover:text-red-400'>Contact</button>
         <div className='text-white flex gap-4 items-center'>
           <button className='font-bold flex gap-2 items-center hover:text-sky-400'>
-            <img src={imgAvaUser} alt='user' className='rounded-full object-contain h-6' />
+            <img src={imgAvaUser} alt='user' className='rounded-full object-contain h-10' />
             Admin
           </button>
-          <Button type='primary' onClick={logout} className='font-bold'>
+          <Button type='default' onClick={logout} className='font-bold'>
             Đăng xuất
           </Button>
         </div>

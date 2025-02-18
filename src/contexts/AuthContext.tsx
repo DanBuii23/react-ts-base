@@ -15,7 +15,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [accessToken, setAccessToken] = useState<string>(localStorage.getItem('accessToken') || '')
   const [user, setUser] = useState<string | null>(localStorage.getItem('user') || null)
-  const navigate = useNavigate() // Dùng để điều hướng
+  const navigate = useNavigate()
 
   const login = (username: string) => {
     // Giả lập đăng nhập thành công và lưu token
@@ -34,7 +34,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setAccessToken('')
     setUser(null)
     message.success('Đăng xuất thành công!')
-    navigate('/login') // Chuyển hướng về trang login
+    navigate('/login', { replace: true })
   }
 
   const value = {

@@ -121,8 +121,5 @@ export function CategoryProvider({ children }: { children: ReactNode }) {
 // Hook để sử dụng CategoryContext
 export function useCategory() {
   const context = useContext(CategoryContext)
-  if (!context) {
-    throw new Error('useCategory must be used within a CategoryProvider')
-  }
   return context
 }

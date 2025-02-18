@@ -23,7 +23,6 @@ function AppRoutes() {
   return (
     <Routes>
       <Route path='/login' element={<Login />} />
-
       <Route element={<Layout />}>
         <Route path='/' element={<HomePage />} />
         <Route path='/categories/:id' element={<ProductList />} />
