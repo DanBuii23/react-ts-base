@@ -1,11 +1,13 @@
 import React from 'react'
-import { Button, Layout } from 'antd'
-import imglogo from '../../../../public/images/login.jpg'
-import { useAuth } from '../../../contexts/AuthContext'
+import { Layout } from 'antd'
 import { Link } from 'react-router-dom'
 import Search from 'antd/es/transfer/search'
-const { Header } = Layout
+import { useAuth } from '../../../contexts/AuthContext'
+import imglogo from '../../../../public/images/login.jpg'
 import imgAvaUser from '../../../../public/images/j97.jpg'
+import { MButton } from '../../atoms'
+
+const { Header } = Layout
 
 const AppHeader = () => {
   const { logout } = useAuth()
@@ -23,18 +25,26 @@ const AppHeader = () => {
       </div>
 
       <div className='basis-1/2 flex gap-10 items-center'>
-        <button className='text-white hover:text-red-400'>Home</button>
-        <button className='text-white hover:text-red-400'>Product</button>
-        <button className='text-white hover:text-red-400'>About</button>
-        <button className='text-white hover:text-red-400'>Contact</button>
+        <MButton type='link' className='text-white hover:text-red-400'>
+          Home
+        </MButton>
+        <MButton type='link' className='text-white hover:text-red-400'>
+          Product
+        </MButton>
+        <MButton type='link' className='text-white hover:text-red-400'>
+          About
+        </MButton>
+        <MButton type='link' className='text-white hover:text-red-400'>
+          Contact
+        </MButton>
         <div className='text-white flex gap-4 items-center'>
-          <button className='font-bold flex gap-2 items-center hover:text-sky-400'>
+          <MButton type='link' className='font-bold flex gap-2 items-center hover:text-sky-400'>
             <img src={imgAvaUser} alt='user' className='rounded-full object-contain h-10' />
             Admin
-          </button>
-          <Button type='default' onClick={logout} className='font-bold'>
+          </MButton>
+          <MButton type='default' onClick={logout} className='font-bold'>
             Đăng xuất
-          </Button>
+          </MButton>
         </div>
       </div>
     </Header>

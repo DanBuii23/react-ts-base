@@ -1,8 +1,10 @@
-import { Button, Form, Input } from 'antd'
+import { Form, Input } from 'antd'
 import { Navigate } from 'react-router-dom'
 import bgtech from '../../../../public/images/bgtechno.jpg'
-import imgLogin from '../../../../public/images/login.jpg' // Ảnh minh họa
+import imgLogin from '../../../../public/images/login.jpg'
 import { useAuth } from '../../../contexts/AuthContext'
+import { MButton } from '../../atoms'
+
 const Login = () => {
   const { login, accessToken, loading } = useAuth()
 
@@ -33,20 +35,19 @@ const Login = () => {
                   Quên mật khẩu?
                 </a>
               </div>
-
-              <Button type='primary' htmlType='submit' block loading={loading} className='py-3'>
+              <MButton type='primary' htmlType='submit' block loading={loading}>
                 Login
-              </Button>
+              </MButton>
             </Form>
 
             {/* Login bằng MXH */}
             <div className='flex gap-4 my-4'>
-              <Button block className='border shadow-md p-3 hover:bg-gray-100'>
+              <MButton block className='border shadow-md p-3 hover:bg-gray-100'>
                 Login với Facebook
-              </Button>
-              <Button block className='border shadow-md p-3 hover:bg-gray-100'>
+              </MButton>
+              <MButton block className='border shadow-md p-3 hover:bg-gray-100'>
                 Login với Google
-              </Button>
+              </MButton>
             </div>
 
             <h1 className='text-center text-gray-600'>
@@ -56,8 +57,6 @@ const Login = () => {
               </a>
             </h1>
           </div>
-
-          {/* Hình minh họa */}
           <div className='w-1/2 flex justify-center items-center'>
             <img src={imgLogin} alt='login' className='object-contain rounded-lg shadow-lg' />
           </div>
