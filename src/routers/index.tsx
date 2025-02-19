@@ -5,7 +5,7 @@ import Sidebar from '../components/organisms/Sidebar'
 import AppHeader from '../components/organisms/Header'
 import AppFooter from '../components/organisms/Footer'
 import ProductList from '../components/organisms/Content'
-import { useAuth } from '../contexts/AuthContext'
+import { ProtectedRoute, useAuth } from '../contexts/AuthContext'
 
 // Layout chính có kiểm tra đăng nhập
 const Layout = () => {
@@ -32,9 +32,11 @@ const AppRoutes = () => {
   return (
     <Routes>
       <Route path='/login' element={<Login />} />
-      <Route element={<Layout />}>
-        <Route path='/' element={<HomePage />} />
-        <Route path='/categories/:id' element={<ProductList />} />
+      <Route element={<ProtectedRoute />}>
+        <Route element={<Layout />}>
+          <Route path='/' element={<HomePage />} />
+          <Route path='/categories/:id' element={<ProductList />} />
+        </Route>
       </Route>
     </Routes>
   )

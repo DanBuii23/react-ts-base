@@ -1,6 +1,6 @@
 import { message } from 'antd'
 import { createContext, useContext, ReactNode, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Navigate, Outlet, useNavigate } from 'react-router-dom'
 
 interface AuthContextType {
   accessToken: string
@@ -11,6 +11,12 @@ interface AuthContextType {
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
+
+export const ProtectedRoute = () => {
+  const accessToken = localStorage.getItem('accessToken')
+
+  return accessToken ? <Outlet /> : <Navigate to='/login' />
+}
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [accessToken, setAccessToken] = useState<string>(localStorage.getItem('accessToken') || '')
