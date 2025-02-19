@@ -4,7 +4,7 @@ import { Footer } from 'antd/es/layout/layout'
 const AppFooter = () => {
   return (
     <>
-      <Footer className='mt-1'>
+      <Footer className='mt-auto'>
         <div className='mx-auto h-max flex'>
           <div className='basis-1/2'>
             <h2 className='text-2xl'>Address: </h2>

@@ -1,62 +1,116 @@
 {
   "categories": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Phones",
       "products": [
-        { "id": 1, "image": "/images/iphone16.jpg", "alt": "Iphone 16 Pro Max" },
+        {
+          "id": 1,
+          "alt": "Iphone 16 Pro Max",
+          "image": "/images/iphone16.jpg"
+        },
         {
           "id": 2,
           "image": "/images/samsungs24.jpg",
           "alt": "Samsung Galaxy S24 Ultra"
         },
-        { "id": 3, "image": "/images/xiaomi14ul.jpg", "alt": "Xiaomi 14 Ultra" },
-        { "id": 4, "image": "/images/oppofindx8.jpg", "alt": "Oppo Find x8" },
-        { "id": 5, "image": "/images/pocox7pro.jpg", "alt": "Poco X7 Pro" },
-        { "id": 6, "image": "/images/realmex7pro.jpg", "alt": "Realme X7 Pro" }
+        {
+          "id": 3,
+          "image": "/images/xiaomi14ul.jpg",
+          "alt": "Xiaomi 14 Ultra"
+        },
+        {
+          "id": 4,
+          "image": "/images/oppofindx8.jpg",
+          "alt": "Oppo Find x8"
+        },
+        {
+          "id": 5,
+          "image": "/images/pocox7pro.jpg",
+          "alt": "Poco X7 Pro"
+        },
+        {
+          "id": 6,
+          "image": "/images/realmex7pro.jpg",
+          "alt": "Realme X7 Pro"
+        }
       ]
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Laptops",
       "products": [
-        { "id": 7, "image": "/images/macbook-pro.jpg", "alt": "Macbook Pro" },
-        { "id": 8, "image": "/images/legion7-pro.jpg", "alt": "Legion 7 Pro" },
-        { "id": 9, "image": "/images/dell-XPS.jpg", "alt": "Dell XPS" },
+        {
+          "id": 7,
+          "alt": "Macbook Pro",
+          "image": "/images/macbook-pro.jpg"
+        },
+        {
+          "id": 8,
+          "image": "/images/legion7-pro.jpg",
+          "alt": "Legion 7 Pro"
+        },
+        {
+          "id": 9,
+          "image": "/images/dell-XPS.jpg",
+          "alt": "Dell XPS"
+        },
         {
           "id": 10,
           "image": "/images/surface-pro9.jpg",
           "alt": "/Windows Surface Pro 9"
         },
-        { "id": 11, "image": "/images/thinkpad.jpg", "alt": "ThinkPad" },
-        { "id": 12, "image": "/images/vivobook.jpg", "alt": "Vivobook" }
+        {
+          "id": 11,
+          "image": "/images/thinkpad.jpg",
+          "alt": "ThinkPad"
+        },
+        {
+          "id": 12,
+          "image": "/images/vivobook.jpg",
+          "alt": "Vivobook"
+        }
       ]
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "Headphones",
       "products": [
-        { "id": 13, "image": "/images/airpods.jpg", "alt": "AirPods Pro" },
-        { "id": 14, "image": "/images/JBLtune.jpg", "alt": "JBL Tunes" },
-        { "id": 15, "image": "/images/sony-WF.jpg", "alt": "Sony WF-1000xm4" },
-        { "id": 16, "image": "/images/marshall.jpg", "alt": "Marshall" },
-        { "id": 17, "image": "/images/soundcore.jpg", "alt": "Soundcore r50i NC" },
-        { "id": 18, "image": "/images/qcy-pro.jpg", "alt": "QCY Melobuds Pro" }
+        {
+          "id": 13,
+          "alt": "AirPods Pro 1",
+          "image": "/images/airpods.jpg"
+        },
+        {
+          "id": 15,
+          "image": "/images/sony-WF.jpg",
+          "alt": "Sony WF-1000xm4"
+        },
+        {
+          "id": 16,
+          "image": "/images/marshall.jpg",
+          "alt": "Marshall"
+        },
+        {
+          "id": 17,
+          "image": "/images/soundcore.jpg",
+          "alt": "Soundcore r50i NC"
+        },
+        {
+          "id": 18,
+          "image": "/images/qcy-pro.jpg",
+          "alt": "QCY Melobuds Pro"
+        }
       ]
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "Keyboards",
       "products": [
         {
-          "id": 19,
-          "image": "/images/akko108.jpg",
-          "alt": "Bàn phím Akko 108 phím"
-        },
-        {
           "id": 20,
-          "image": "/images/akko68.jpg",
-          "alt": "Bàn phím Akko 68 phím"
+          "alt": "Bàn phím Akko 68 phí",
+          "image": "/images/akko68.jpg"
         },
         {
           "id": 21,
@@ -68,13 +122,48 @@
           "image": "/images/akko-anime.jpg",
           "alt": "Bàn phím Akko OnePiece"
         },
-        { "id": 23, "image": "/images/havit.jpg", "alt": "Bàn phím Havit" },
+        {
+          "id": 23,
+          "image": "/images/havit.jpg",
+          "alt": "Bàn phím Havit"
+        },
         {
           "id": 24,
           "image": "/images/logitech.jpg",
           "alt": "Bàn phím Logitech"
         }
       ]
+    },
+    {
+      "id": "1739942122979",
+      "name": "Mouse",
+      "products": [
+        {
+          "id": 1739946136667,
+          "alt": "Lenovo M500",
+          "image": "blob:http://localhost:3000/71d10cae-64a4-41aa-942c-d29532888fc1"
+        },
+        {
+          "id": 1739946241592,
+          "alt": "Logitech M331",
+          "image": "blob:http://localhost:3000/f1c9e505-26f8-467f-9c9c-a50744e7b20d"
+        },
+        {
+          "id": 1739948042773,
+          "alt": "Logitech G102",
+          "image": "blob:http://localhost:3000/704b298d-582f-4430-acca-586f5740576f"
+        },
+        {
+          "id": 1739948137629,
+          "alt": "Logitech G304",
+          "image": "blob:http://localhost:3000/4368b6d0-439a-4165-8b85-f9d3ba6097b1"
+        }
+      ]
+    },
+    {
+      "id": "1739943213048",
+      "name": "PC",
+      "products": []
     }
   ]
 }

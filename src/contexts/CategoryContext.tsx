@@ -33,11 +33,26 @@ export function CategoryProvider({ children }: { children: ReactNode }) {
 
   // Lấy danh mục từ db.json
   useEffect(() => {
-    fetch('http://localhost:5000/categories')
-      .then((res) => res.json())
-      .then((data) => setCategories(data))
-      .catch((err) => console.error('Lỗi khi lấy dữ liệu:', err))
+    const fetchCategories = async () => {
+      try {
+        const res = await fetch('http://localhost:5000/categories')
+        const data = await res.json()
+        setCategories(data)
+      } catch (err) {
+        console.error('Lỗi khi lấy dữ liệu:', err)
+      }
+    }
+    fetchCategories()
   }, [])
+
+  const updateCategoryData = async (categoryId: string, updatedCategory: Category) => {
+    await fetch(`http://localhost:5000/categories/${categoryId}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(updatedCategory)
+    })
+    setCategories((prev) => prev.map((c) => (c.id === categoryId ? updatedCategory : c)))
+  }
 
   const addCategory = async (name: string) => {
     const newCategory = { id: Date.now().toString(), name, products: [] }
@@ -46,67 +61,45 @@ export function CategoryProvider({ children }: { children: ReactNode }) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(newCategory)
     })
-    setCategories([...categories, newCategory])
+    setCategories((prev) => [...prev, newCategory])
   }
 
   const updateCategory = async (id: string, name: string) => {
-    await fetch(`http://localhost:5000/categories/${id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ...categories.find((c) => c.id === id), name })
-    })
-    setCategories(categories.map((c) => (c.id === id ? { ...c, name } : c)))
+    const category = categories.find((c) => c.id === id)
+    if (!category) return
+    updateCategoryData(id, { ...category, name })
   }
 
   const deleteCategory = async (id: string) => {
     await fetch(`http://localhost:5000/categories/${id}`, { method: 'DELETE' })
-    setCategories(categories.filter((c) => c.id !== id))
+    setCategories((prev) => prev.filter((c) => c.id !== id))
   }
 
   const addProduct = async (categoryId: string, product: Omit<Product, 'id'>) => {
     const category = categories.find((c) => c.id === categoryId)
     if (!category) return
-
     const newProduct = { id: Date.now(), ...product }
-    category.products.push(newProduct)
-
-    await fetch(`http://localhost:5000/categories/${categoryId}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(category)
-    })
-
-    setCategories([...categories])
+    updateCategoryData(categoryId, { ...category, products: [...category.products, newProduct] })
   }
 
   const updateProduct = async (categoryId: string, productId: number, updatedProduct: Product) => {
     const category = categories.find((c) => c.id === categoryId)
     if (!category) return
-
-    category.products = category.products.map((p) => (p.id === productId ? updatedProduct : p))
-
-    await fetch(`http://localhost:5000/categories/${categoryId}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(category)
-    })
-
-    setCategories([...categories])
+    const updatedCategory = {
+      ...category,
+      products: category.products.map((p) => (p.id === productId ? updatedProduct : p))
+    }
+    updateCategoryData(categoryId, updatedCategory)
   }
 
   const deleteProduct = async (categoryId: string, productId: number) => {
     const category = categories.find((c) => c.id === categoryId)
     if (!category) return
-
-    category.products = category.products.filter((p) => p.id !== productId)
-
-    await fetch(`http://localhost:5000/categories/${categoryId}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(category)
-    })
-
-    setCategories([...categories])
+    const updatedCategory = {
+      ...category,
+      products: category.products.filter((p) => p.id !== productId)
+    }
+    updateCategoryData(categoryId, updatedCategory)
   }
 
   return (
@@ -121,5 +114,8 @@ export function CategoryProvider({ children }: { children: ReactNode }) {
 // Hook để sử dụng CategoryContext
 export function useCategory() {
   const context = useContext(CategoryContext)
+  if (!context) {
+    throw new Error('useCategory must be used within a CategoryProvider')
+  }
   return context
 }
