@@ -1,57 +1,67 @@
 import { message } from 'antd'
 import { createContext, useContext, ReactNode, useState } from 'react'
 import { Navigate, Outlet, useNavigate } from 'react-router-dom'
+import { useMutation } from '@tanstack/react-query'
+import apiClient from './ApiClient'
 
 interface AuthContextType {
-  accessToken: string
-  user: string | null
+  accessToken: string | null
   loading: boolean
-  login: (username: string, password: string) => void
+  login: (email: string, password: string) => void
   logout: () => void
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export const ProtectedRoute = () => {
-  const accessToken = localStorage.getItem('accessToken')
-
+  const { accessToken } = useAuth()
   return accessToken ? <Outlet /> : <Navigate to='/login' />
 }
 
+// Hàm gọi API đăng nhập
+const loginApi = async (email: string, password: string) => {
+  const response = await apiClient.post('https://api-g2.nedytech.com/api/v1/cms/auths/login', { email, password })
+  return response.data
+}
+
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [accessToken, setAccessToken] = useState<string>(localStorage.getItem('accessToken') || '')
-  const [user, setUser] = useState<string | null>(localStorage.getItem('user') || null)
-  const [loading, setLoading] = useState<boolean>(false)
+  const [accessToken, setAccessToken] = useState<string | null>(sessionStorage.getItem('accessToken'))
   const navigate = useNavigate()
 
-  const login = (username: string, password: string) => {
-    setLoading(true)
-    setTimeout(() => {
-      if (username === 'ad' && password === '1') {
-        const token = 'dummy-token' // Giả lập token
-        localStorage.setItem('accessToken', token)
-        localStorage.setItem('user', username)
-        setAccessToken(token)
-        setUser(username)
-        message.success('Đăng nhập thành công!')
-        navigate('/')
-      } else {
-        message.error('Sai tài khoản hoặc mật khẩu!')
-      }
-      setLoading(false)
-    }, 1000) // Giả lập delay API
-  }
+  const mutation = useMutation({
+    mutationFn: ({ email, password }: { email: string; password: string }) => loginApi(email, password),
+    onSuccess: (data) => {
+      sessionStorage.setItem('accessToken', data.data.accessToken)
+      setAccessToken(data.data.accessToken)
+
+      message.success('Đăng nhập thành công!')
+      setTimeout(() => navigate('/'), 500)
+    },
+    onError: (error: any) => {
+      message.error((error.response?.data?.message as string) || 'Đăng nhập thất bại!')
+    }
+  })
 
   const logout = () => {
-    localStorage.removeItem('accessToken')
-    localStorage.removeItem('user')
-    setAccessToken('')
-    setUser(null)
+    sessionStorage.removeItem('accessToken')
+    setAccessToken(null)
+
     message.success('Đăng xuất thành công!')
     navigate('/login', { replace: true })
   }
 
-  return <AuthContext.Provider value={{ accessToken, user, loading, login, logout }}>{children}</AuthContext.Provider>
+  return (
+    <AuthContext.Provider
+      value={{
+        accessToken,
+        loading: mutation.isPending,
+        login: (email: string, password: string) => mutation.mutate({ email, password }),
+        logout
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  )
 }
 
 export const useAuth = () => {
