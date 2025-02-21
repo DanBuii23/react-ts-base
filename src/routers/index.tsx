@@ -1,12 +1,12 @@
 import { Navigate, Outlet, Route, Routes } from 'react-router-dom'
 import HomePage from '../components/pages/homepage'
 import Login from '../components/pages/login'
-import Sidebar from '../components/organisms/Sidebar'
-import AppHeader from '../components/organisms/Header'
-import AppFooter from '../components/organisms/Footer'
-import ProductList from '../components/organisms/Content/productList'
+import Sidebar from '../components/templates/Sidebar'
+import AppHeader from '../components/templates/Header'
+import AppFooter from '../components/templates/Footer'
+import ProductList from '../components/templates/Content/productList'
 import { ProtectedRoute, useAuth } from '../contexts/AuthContext'
-import ProductDetail from '../components/organisms/Content/productDetail'
+import ProductDetail from '../components/templates/Content/productDetail'
 
 // Layout chính có kiểm tra đăng nhập
 const Layout = () => {
