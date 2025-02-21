@@ -2,7 +2,7 @@ import { message } from 'antd'
 import { createContext, useContext, ReactNode, useState } from 'react'
 import { Navigate, Outlet, useNavigate } from 'react-router-dom'
 import { useMutation } from '@tanstack/react-query'
-import apiClient from '../components/Api/ApiClient'
+import { loginApi } from '../components/hooks/login'
 
 interface AuthContextType {
   accessToken: string | null
@@ -17,35 +17,27 @@ export const ProtectedRoute = () => {
   const { accessToken } = useAuth()
   return accessToken ? <Outlet /> : <Navigate to='/login' />
 }
-
-// Hàm gọi API đăng nhập
-const loginApi = async (email: string, password: string) => {
-  const response = await apiClient.post('api/v1/cms/auths/login', { email, password })
-  return response.data
-}
-
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [accessToken, setAccessToken] = useState<string | null>(sessionStorage.getItem('accessToken'))
   const navigate = useNavigate()
 
   const mutation = useMutation({
-    mutationFn: ({ email, password }: { email: string; password: string }) => loginApi(email, password),
+    mutationFn: loginApi,
     onSuccess: (data) => {
-      sessionStorage.setItem('accessToken', data.data.accessToken)
-      setAccessToken(data.data.accessToken)
-
+      const token = data.data.accessToken
+      sessionStorage.setItem('accessToken', token)
+      setAccessToken(token) // Cập nhật state để re-render component
       message.success('Đăng nhập thành công!')
       navigate('/')
     },
     onError: (error: { response?: { data?: { message?: string } } }) => {
-      message.error((error.response?.data?.message as string) || 'Đăng nhập thất bại!')
+      message.error(error.response?.data?.message || 'Đăng nhập thất bại!')
     }
   })
 
   const logout = () => {
     sessionStorage.removeItem('accessToken')
     setAccessToken(null)
-
     message.success('Đăng xuất thành công!')
     navigate('/login', { replace: true })
   }
