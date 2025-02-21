@@ -133,32 +133,6 @@
           "alt": "Bàn phím Logitech"
         }
       ]
-    },
-    {
-      "id": "1739942122979",
-      "name": "Mouse",
-      "products": [
-        {
-          "id": 1739946136667,
-          "alt": "Lenovo M500",
-          "image": "blob:http://localhost:3000/71d10cae-64a4-41aa-942c-d29532888fc1"
-        },
-        {
-          "id": 1739946241592,
-          "alt": "Logitech M331",
-          "image": "blob:http://localhost:3000/f1c9e505-26f8-467f-9c9c-a50744e7b20d"
-        },
-        {
-          "id": 1739948137629,
-          "alt": "Logitech G304",
-          "image": "blob:http://localhost:3000/4368b6d0-439a-4165-8b85-f9d3ba6097b1"
-        },
-        {
-          "id": 1739949244617,
-          "alt": "Logitech G102",
-          "image": "blob:http://localhost:3000/87a77cb5-ba4e-4d84-a6bd-eb3f2ff18194"
-        }
-      ]
     }
   ]
 }

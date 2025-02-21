@@ -55,10 +55,9 @@ const ProductList = () => {
       {showForm && (
         <div className='mt-4 p-4 border rounded-lg shadow-md'>
           <MInput
-            placeholder='Tên sản phẩm'
+            label='Tên sản phẩm'
             value={newProduct.alt}
             onChange={(e) => setNewProduct({ ...newProduct, alt: e.target.value })}
-            className='mb-2'
           />
 
           <input
@@ -66,6 +65,7 @@ const ProductList = () => {
             accept='image/png, image/jpeg, image/jpg'
             onChange={handleImageChange}
             className='border p-2 w-full mb-2'
+            placeholder='picture'
           />
 
           {imageFile && (

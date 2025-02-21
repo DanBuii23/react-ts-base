@@ -84,6 +84,7 @@ const ProductDetail = () => {
         accept='image/png, image/jpeg, image/jpg'
         onChange={handleImageChange}
         className='border p-2 w-full mb-2'
+        placeholder='picture'
       />
 
       {productImage && (

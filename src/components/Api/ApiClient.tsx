@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const apiClient = axios.create({
-  baseURL: 'https://api-g2.nedytech.com/api/v1/cms/auths/login',
+  baseURL: 'https://api-g2.nedytech.com/',
   headers: {
     'Content-Type': 'application/json'
   }

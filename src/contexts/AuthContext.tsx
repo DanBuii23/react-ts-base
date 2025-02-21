@@ -2,7 +2,7 @@ import { message } from 'antd'
 import { createContext, useContext, ReactNode, useState } from 'react'
 import { Navigate, Outlet, useNavigate } from 'react-router-dom'
 import { useMutation } from '@tanstack/react-query'
-import apiClient from './ApiClient'
+import apiClient from '../components/Api/ApiClient'
 
 interface AuthContextType {
   accessToken: string | null
@@ -20,7 +20,7 @@ export const ProtectedRoute = () => {
 
 // Hàm gọi API đăng nhập
 const loginApi = async (email: string, password: string) => {
-  const response = await apiClient.post('https://api-g2.nedytech.com/api/v1/cms/auths/login', { email, password })
+  const response = await apiClient.post('api/v1/cms/auths/login', { email, password })
   return response.data
 }
 
@@ -35,9 +35,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setAccessToken(data.data.accessToken)
 
       message.success('Đăng nhập thành công!')
-      setTimeout(() => navigate('/'), 500)
+      navigate('/')
     },
-    onError: (error: any) => {
+    onError: (error: { response?: { data?: { message?: string } } }) => {
       message.error((error.response?.data?.message as string) || 'Đăng nhập thất bại!')
     }
   })
