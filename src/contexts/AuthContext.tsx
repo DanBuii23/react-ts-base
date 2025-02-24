@@ -25,7 +25,6 @@ export const useAuth = () => {
   return context
 }
 
-// Bảo vệ route yêu cầu đăng nhập
 export const ProtectedRoute = () => {
   const { accessToken } = useAuth()
   return accessToken ? <Outlet /> : <Navigate to='/login' replace />

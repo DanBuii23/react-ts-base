@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
 import { ACCESS_TOKEN } from '../../constants'
@@ -14,7 +14,7 @@ export const useAuthHook = () => {
       if (token) {
         setAccessToken(token)
         sessionStorage.setItem(ACCESS_TOKEN, token)
-        navigate('/') // Chuyển trang ngay sau khi đăng nhập
+        navigate('/')
       }
     },
     onError: (error) => {
@@ -28,11 +28,6 @@ export const useAuthHook = () => {
     sessionStorage.removeItem(ACCESS_TOKEN)
     navigate('/login', { replace: true })
   }
-
-  // Đảm bảo khi token thay đổi, tự động cập nhật state
-  useEffect(() => {
-    setAccessToken(sessionStorage.getItem(ACCESS_TOKEN))
-  }, [])
 
   return {
     accessToken,
