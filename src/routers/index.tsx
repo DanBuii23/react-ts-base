@@ -7,18 +7,17 @@ import AppFooter from '../components/templates/Footer'
 import ProductList from '../components/templates/Content/productList'
 import { ProtectedRoute, useAuth } from '../contexts/AuthContext'
 import ProductDetail from '../components/templates/Content/productDetail'
+import AboutPage from '../components/pages/about'
 
 // Layout chính có kiểm tra đăng nhập
-const Layout = () => {
+const LayoutHome = () => {
   const { accessToken } = useAuth()
-
   if (!accessToken) return <Navigate to='/login' replace />
-
   return (
     <div className='flex flex-col min-h-screen'>
       <div>
         <AppHeader />
-        <div className='flex'>
+        <div className='container mx-auto flex'>
           <Sidebar />
           <div className='flex-1 p-4'>
             <Outlet />
@@ -36,8 +35,9 @@ const AppRoutes = () => {
     <Routes>
       <Route path='/login' element={<Login />} />
       <Route element={<ProtectedRoute />}>
-        <Route element={<Layout />}>
+        <Route element={<LayoutHome />}>
           <Route path='/' element={<HomePage />} />
+          <Route path='/about' element={<AboutPage />} />
           <Route path='/categories/:id' element={<ProductList />} />
           <Route path='/categories/:id/products/:productId' element={<ProductDetail />} />
         </Route>

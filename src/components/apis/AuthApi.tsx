@@ -1,4 +1,4 @@
-import apiClient from '../apis/ApiClient'
+import apiClient from './ApiClient'
 
 interface LoginParams {
   email: string

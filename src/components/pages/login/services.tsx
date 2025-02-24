@@ -1,0 +1,27 @@
+import { message } from 'antd'
+import { loginApi } from '../../apis/AuthApi'
+import { ACCESS_TOKEN } from '../../../constants'
+
+export const login = async (email: string, password: string) => {
+  try {
+    const response = await loginApi({ email, password })
+    // Lấy token đúng key từ API
+    const token = response?.data?.accessToken
+    if (!token) {
+      throw new Error('Không nhận được token từ server!')
+    }
+
+    sessionStorage.setItem(ACCESS_TOKEN, token)
+    message.success('Đăng nhập thành công!')
+    return token
+  } catch (error: any) {
+    console.error('Lỗi đăng nhập:', error)
+    message.error(error.response?.data?.message || 'Đăng nhập thất bại!')
+    throw error
+  }
+}
+
+export const logout = () => {
+  sessionStorage.removeItem(ACCESS_TOKEN)
+  message.success('Đăng xuất thành công!')
+}

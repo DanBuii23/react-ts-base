@@ -6,7 +6,6 @@ import MInput from '../../atoms/MInput'
 import { AppstoreOutlined } from '@ant-design/icons'
 
 export default function Sidebar() {
-  const [collapsed, setCollapsed] = useState(false)
   const { categories, addCategory, updateCategory, deleteCategory } = useCategory()
 
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -59,12 +58,15 @@ export default function Sidebar() {
   ]
   return (
     <div className='flex'>
-      <div className={`min-h-screen bg-white shadow-lg transition-all ${collapsed ? 'w-24' : 'w-80'} p-2`}>
-        <button className='mb-4 p-2 w-full bg-slate-900 text-white rounded-md' onClick={() => setCollapsed(!collapsed)}>
-          {collapsed ? '>' : '<'}
-        </button>
-
-        <Menu mode='inline' theme='light' openKeys={openKeys} onOpenChange={setOpenKeys} items={menuItems} />
+      <div className={`min-h-screen bg-white shadow-lg transition-all w-auto p-2`}>
+        <Menu
+          mode='inline'
+          theme='light'
+          openKeys={openKeys}
+          onOpenChange={setOpenKeys}
+          items={menuItems}
+          className=''
+        />
       </div>
 
       <Modal

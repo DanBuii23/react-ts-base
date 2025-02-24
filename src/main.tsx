@@ -2,9 +2,9 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import AppRoutes from './routers/index.tsx'
 import { BrowserRouter as Router } from 'react-router-dom'
-import { AuthProvider } from './contexts/AuthContext.tsx'
 import { CategoryProvider } from './contexts/CategoryContext.tsx'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { AuthProvider } from './contexts/AuthContext.tsx'
 
 const queryClient = new QueryClient()
 
