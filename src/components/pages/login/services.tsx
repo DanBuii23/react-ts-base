@@ -14,9 +14,13 @@ export const login = async (email: string, password: string) => {
     sessionStorage.setItem(ACCESS_TOKEN, token)
     message.success('Đăng nhập thành công!')
     return token
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Lỗi đăng nhập:', error)
-    message.error(error.response?.data?.message || 'Đăng nhập thất bại!')
+    if (error instanceof Error) {
+      message.error(error.message || 'Đăng nhập thất bại!')
+    } else {
+      message.error('Đăng nhập thất bại!')
+    }
     throw error
   }
 }
