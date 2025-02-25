@@ -11,3 +11,18 @@ export const tagsApi = async (page: number, pageSize: number, search?: string, f
     throw error
   }
 }
+
+export const getTagDetailApi = async (tagId: string) => {
+  return apiClient.get(`/api/v1/cms/tags/${tagId}`)
+}
+
+export const createTagApi = async (tagData: any) => {
+  return apiClient.post('/api/v1/cms/tags', tagData)
+}
+
+export const updateTagApi = async (tagId: string, tagData: any) => {
+  return apiClient.put(`/api/v1/cms/tags/${tagId}`, tagData)
+}
+export const deleteTagApi = async (tagId: string) => {
+  return apiClient.delete(`/api/v1/cms/tags/${tagId}`)
+}
