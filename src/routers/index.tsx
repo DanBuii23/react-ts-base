@@ -8,6 +8,7 @@ import ProductList from '../components/templates/Content/productList'
 import { ProtectedRoute, useAuth } from '../contexts/AuthContext'
 import ProductDetail from '../components/templates/Content/productDetail'
 import AboutPage from '../components/pages/about'
+import TagsList from '../components/templates/Tags'
 
 // Layout chính có kiểm tra đăng nhập
 const LayoutHome = () => {
@@ -40,6 +41,7 @@ const AppRoutes = () => {
           <Route path='/about' element={<AboutPage />} />
           <Route path='/categories/:id' element={<ProductList />} />
           <Route path='/categories/:id/products/:productId' element={<ProductDetail />} />
+          <Route path='/tags' element={<TagsList />} /> {/* Route mới cho TagsList */}
         </Route>
       </Route>
     </Routes>

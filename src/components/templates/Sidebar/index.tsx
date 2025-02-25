@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Menu, Modal, Select, message } from 'antd'
 import { Link } from 'react-router-dom'
 import { useCategory } from '../../../contexts/CategoryContext'
@@ -34,8 +34,12 @@ export default function Sidebar() {
     setCategoryName('')
     setSelectedCategoryId(null)
   }
-
   const menuItems = [
+    {
+      key: 'tags',
+      label: <Link to='/tags'>Quản lý Tags</Link>,
+      icon: <AppstoreOutlined />
+    },
     {
       key: 'categories',
       label: 'Danh mục',
@@ -56,6 +60,7 @@ export default function Sidebar() {
       ]
     }
   ]
+
   return (
     <div className='flex'>
       <div className={`min-h-screen bg-white shadow-lg transition-all w-auto p-2`}>
