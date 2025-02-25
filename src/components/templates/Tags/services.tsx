@@ -1,4 +1,4 @@
-import { fetchTagsApi } from '../../apis/TagsApi'
+import { tagsApi } from '../../apis/TagsApi'
 
 export const getTagsService = async (page: number, pageSize: number, search: string, filter?: string) => {
   try {
@@ -7,7 +7,7 @@ export const getTagsService = async (page: number, pageSize: number, search: str
       throw new Error('Không thấy accessToken')
     }
 
-    const response = await fetchTagsApi(page, pageSize, search, filter)
+    const response = await tagsApi(page, pageSize, search, filter)
 
     console.log('API Response:', response) // Kiểm tra dữ liệu nhận được
 
