@@ -2,14 +2,14 @@ import { useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
 import { ACCESS_TOKEN } from '../../constants'
-import { login, logout } from '../pages/login/services'
+import { loginServices, logout } from '../pages/login/services'
 
 export const useAuthHook = () => {
   const [accessToken, setAccessToken] = useState<string | null>(sessionStorage.getItem(ACCESS_TOKEN))
   const navigate = useNavigate()
 
   const loginMutation = useMutation({
-    mutationFn: ({ email, password }: { email: string; password: string }) => login(email, password),
+    mutationFn: ({ email, password }: { email: string; password: string }) => loginServices(email, password),
     onSuccess: (token) => {
       if (token) {
         setAccessToken(token)

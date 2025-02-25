@@ -1,6 +1,6 @@
 import { tagsApi } from '../../apis/TagsApi'
 
-export const getTagsService = async (page: number, pageSize: number, search: string, filter?: string) => {
+export const tagsService = async (page: number, pageSize: number, search: string, filter?: string) => {
   try {
     const accessToken = sessionStorage.getItem('accessToken')
     if (!accessToken) {

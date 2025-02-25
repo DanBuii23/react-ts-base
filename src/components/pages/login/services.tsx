@@ -2,7 +2,7 @@ import { message } from 'antd'
 import { loginApi } from '../../apis/AuthApi'
 import { ACCESS_TOKEN } from '../../../constants'
 
-export const login = async (email: string, password: string) => {
+export const loginServices = async (email: string, password: string) => {
   try {
     const response = await loginApi({ email, password })
     // Lấy token đúng key từ API
