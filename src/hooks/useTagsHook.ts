@@ -1,20 +1,30 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { getTagDetailService, tagsService } from '../templates/Tags/services'
-import { createTagApi, deleteTagApi, updateTagApi } from '../apis/TagsApi'
+import { tagsApi, getTagDetailApi, createTagApi, updateTagApi, deleteTagApi, TagData } from '../apis/TagsApi'
 
-export const useTagsHook = (page: number, pageSize: number, search: string, filter?: string) => {
-  const { data, isLoading, error } = useQuery({
-    queryKey: ['tags', page, pageSize, search, filter],
-    queryFn: () => tagsService(page, pageSize, search, filter)
-  })
-
-  return { data, isLoading, error }
+interface ParamsType {
+  page: number
+  pageSize: number
+  search: string
+  filter?: string
 }
+
+export const useTagsHook = ({ page, pageSize, search, filter }: ParamsType) => {
+  return useQuery({
+    queryKey: ['tags', page, pageSize, search, filter],
+    queryFn: async () => {
+      const response = await tagsApi(page, pageSize, search, filter)
+      return {
+        tags: response.data.datas,
+        total: response.data.total
+      }
+    }
+  })
+}
+
 export const useGetTagDetail = (tagId: string) => {
-  console.log('useGetTagDetail gọi API với ID:', tagId)
   return useQuery({
     queryKey: ['tagDetail', tagId],
-    queryFn: () => getTagDetailService(tagId),
+    queryFn: () => getTagDetailApi(tagId),
     enabled: !!tagId
   })
 }
@@ -34,7 +44,7 @@ export const useUpdateTag = () => {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: ({ tagId, tagData }: { tagId: string; tagData: any }) => updateTagApi(tagId, tagData),
+    mutationFn: ({ tagId, tagData }: { tagId: string; tagData: TagData }) => updateTagApi(tagId, tagData),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['tags'] })
     }

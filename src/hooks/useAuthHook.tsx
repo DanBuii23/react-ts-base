@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
-import { ACCESS_TOKEN } from '../../constants'
-import { loginServices, logout } from '../pages/login/services'
+import { ACCESS_TOKEN } from '../constants'
+import { loginServices, logout } from '../services/services'
 
 export const useAuthHook = () => {
   const [accessToken, setAccessToken] = useState<string | null>(sessionStorage.getItem(ACCESS_TOKEN))

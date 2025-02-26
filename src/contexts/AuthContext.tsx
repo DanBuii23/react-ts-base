@@ -1,6 +1,6 @@
 import { createContext, useContext, ReactNode } from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
-import { useAuthHook } from '../components/hooks/useAuthHook'
+import { useAuthHook } from '../hooks/useAuthHook'
 
 interface AuthContextType {
   accessToken: string | null

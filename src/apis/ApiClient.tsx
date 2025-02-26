@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { ACCESS_TOKEN } from '../../constants'
+import { ACCESS_TOKEN } from '../constants'
 
 const apiClient = axios.create({
   baseURL: 'https://api-g2.nedytech.com/',

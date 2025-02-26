@@ -1,6 +1,6 @@
 import { message } from 'antd'
-import { loginApi } from '../../apis/AuthApi'
-import { ACCESS_TOKEN } from '../../../constants'
+import { loginApi } from '../apis/AuthApi'
+import { ACCESS_TOKEN } from '../constants'
 
 export const loginServices = async (email: string, password: string) => {
   try {
