@@ -15,7 +15,7 @@ export const useTagModals = () => {
   const [selectedTagId, setSelectedTagId] = useState<string | null>(null)
 
   const openModal = (tag?: TagType) => {
-    console.log('🟢 Open Modal - Tag:', tag) // ✅ Debug
+    console.log('🟢 Open Modal - Tag:', tag)
     if (tag) {
       setSelectedTag(tag)
       setSelectedTagId(tag.id)
