@@ -13,7 +13,7 @@ const TagsList = () => {
   const { page, setPage, pageSize, setPageSize, search, handleSearch, filter, handleFilter } = usePagination()
 
   // Hook quản lý modal
-  const { isModalOpen, openModal, closeModal, isDetailModalOpen, openDetailModal, closeDetailModal, selectedTagId } =
+  const { isModalOpen, openModal, closeModal, isDetailModalOpen, openDetailModal, closeDetailModal, selectedTag } =
     useTagModals()
 
   // Hook xử lý API Tags
@@ -22,7 +22,7 @@ const TagsList = () => {
     pageSize,
     search,
     filter,
-    selectedTagId
+    selectedTag
   })
 
   return (
@@ -50,18 +50,9 @@ const TagsList = () => {
             key: 'actions',
             render: (_: any, tag: any) => (
               <MActionButtons
-                onEdit={() => {
-                  console.log('Editing tag:', tag)
-                  openModal(tag)
-                }}
-                onDetail={() => {
-                  console.log(' Viewing tag details:', tag)
-                  openDetailModal(tag.id)
-                }}
-                onDelete={() => {
-                  console.log('Deleting tag:', tag)
-                  handleDelete(tag.id)
-                }}
+                onDetail={() => openDetailModal(tag.id)}
+                onEdit={() => openModal(tag)}
+                onDelete={() => handleDelete(tag.id)}
               />
             )
           }
@@ -116,7 +107,7 @@ const TagsList = () => {
         isOpen={isModalOpen}
         onClose={closeModal}
         onSubmit={handleSubmit}
-        initialValues={selectedTagId} // Truyền dữ liệu vào form
+        initialValues={selectedTag ? { ...selectedTag } : undefined}
       />
     </div>
   )

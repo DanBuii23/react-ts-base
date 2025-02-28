@@ -15,11 +15,12 @@ export const useTagModals = () => {
   const [selectedTagId, setSelectedTagId] = useState<string | null>(null)
 
   const openModal = (tag?: TagType) => {
-    console.log('🟢 Open Modal - Tag:', tag)
-    if (tag) {
+    if (tag?.id) {
+      console.log('Open Edit Modal - Tag:', tag)
       setSelectedTag(tag)
       setSelectedTagId(tag.id)
     } else {
+      console.log('Open Add Modal')
       setSelectedTag(null)
       setSelectedTagId(null)
     }
@@ -27,16 +28,22 @@ export const useTagModals = () => {
   }
 
   const closeModal = () => {
+    console.log('Close Modal')
     setSelectedTag(null)
+    setSelectedTagId(null)
     setIsModalOpen(false)
   }
 
   const openDetailModal = (tagId: string) => {
+    console.log('Open Detail Modal - Tag ID:', tagId)
     setSelectedTagId(tagId)
     setIsDetailModalOpen(true)
   }
 
-  const closeDetailModal = () => setIsDetailModalOpen(false)
+  const closeDetailModal = () => {
+    console.log('Close Detail Modal')
+    setIsDetailModalOpen(false)
+  }
 
   return {
     isModalOpen,
