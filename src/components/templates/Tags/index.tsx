@@ -9,10 +9,10 @@ import MActionButtons from '../../molecules/MButtonAction'
 const { Option } = Select
 
 const TagsList = () => {
-  // Hook quản lý phân trang
+  //phân trang
   const { page, setPage, pageSize, setPageSize, search, handleSearch, filter, handleFilter } = usePagination()
 
-  // Hook quản lý modal
+  //modal
   const {
     isModalOpen,
     openModal,
@@ -24,30 +24,33 @@ const TagsList = () => {
     selectedTagId
   } = useTagModals()
 
-  // Hook xử lý API Tags
+  //API Tags
   const { data, isLoading, tagDetail, isDetailLoading, detailError, handleSubmit, handleDelete } = useTagServices({
     page,
     pageSize,
     search,
     filter,
-    selectedTag,
     selectedTagId
   })
 
   return (
     <div className='container mx-auto p-6'>
       <h1 className='text-2xl font-bold mb-4'>Danh sách Tags</h1>
-
-      <Button type='primary' onClick={() => openModal()} className='mb-4'>
+      <Button type='primary' onClick={() => openModal()} className='m-2'>
         Thêm Tag
       </Button>
-
-      <Input.Search placeholder='Tìm kiếm tag...' value={search} onChange={handleSearch} enterButton className='mb-4' />
-      <Select placeholder='Chọn trạng thái' onChange={handleFilter} allowClear className='mb-4'>
-        <Option value='active'>Trạng thái 1</Option>
-        <Option value='inactive'>Trạng thái 2</Option>
+      <Input.Search
+        placeholder='Tìm kiếm tag...'
+        value={search}
+        onChange={handleSearch}
+        enterButton
+        className='m-2 w-2/3'
+      />
+      <Select placeholder='Chọn trạng thái' onChange={handleFilter} allowClear className='m-2'>
+        <Option value='available'>Trạng thái 1</Option>
+        <Option value='unavailable'>Trạng thái 2</Option>
       </Select>
-
+      <hr />
       <MTable
         columns={[
           { title: 'Tên Tag', dataIndex: 'name', key: 'name' },
@@ -57,7 +60,10 @@ const TagsList = () => {
           {
             title: 'Thao tác',
             key: 'actions',
-            render: (_: any, tag: any) => (
+            render: (
+              _: unknown,
+              tag: { id: string; name: string; slug: string; featureImage: string; totalPost: number }
+            ) => (
               <MActionButtons
                 onDetail={() => openDetailModal(tag.id)}
                 onEdit={() => openModal(tag)}
@@ -78,15 +84,20 @@ const TagsList = () => {
           }
         }}
       />
-
       {/* Modal chi tiết tag */}
-      <Modal title='Chi tiết Tag' open={isDetailModalOpen} onCancel={closeDetailModal} footer={null}>
+      <Modal
+        title='Chi tiết Tag'
+        open={isDetailModalOpen}
+        onCancel={closeDetailModal}
+        footer={null}
+        className='text-center'
+      >
         {isDetailLoading ? (
           <Spin size='large' />
         ) : detailError ? (
           <Alert message='Lỗi khi tải chi tiết Tag' type='error' />
         ) : tagDetail ? (
-          <div>
+          <div className='text-start pt-2'>
             <p>
               <strong>ID:</strong> {tagDetail.id}
             </p>
@@ -110,13 +121,12 @@ const TagsList = () => {
           <p>Không có dữ liệu hiển thị.</p>
         )}
       </Modal>
-
       {/* Modal Thêm/Sửa tag */}
       <TagForm
         isOpen={isModalOpen}
         onClose={closeModal}
         onSubmit={handleSubmit}
-        initialValues={selectedTag ? { ...selectedTag } : undefined}
+        initialValues={selectedTag ? { ...selectedTag } : { name: '', slug: '', featureImage: '' }}
       />
     </div>
   )

@@ -16,11 +16,9 @@ export const useTagModals = () => {
 
   const openModal = (tag?: TagType) => {
     if (tag?.id) {
-      console.log('Open Edit Modal - Tag:', tag)
       setSelectedTag(tag)
       setSelectedTagId(tag.id)
     } else {
-      console.log('Open Add Modal')
       setSelectedTag(null)
       setSelectedTagId(null)
     }
@@ -28,7 +26,6 @@ export const useTagModals = () => {
   }
 
   const closeModal = () => {
-    console.log('Close Modal')
     setSelectedTag(null)
     setSelectedTagId(null)
     setIsModalOpen(false)
@@ -40,7 +37,6 @@ export const useTagModals = () => {
   }
 
   const closeDetailModal = () => {
-    console.log('Close Detail Modal')
     setIsDetailModalOpen(false)
   }
 

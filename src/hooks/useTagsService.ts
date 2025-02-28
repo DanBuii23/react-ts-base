@@ -1,17 +1,28 @@
 import { useTagsHook, useCreateTag, useUpdateTag, useDeleteTag, useGetTagDetail } from './useTagsHook'
 import { message } from 'antd'
 import { useEffect, useState } from 'react'
+import { useDebounce } from '../hooks/useDebounce'
 
-export const useTagServices = ({ page, pageSize, search, filter, selectedTagId }: any) => {
-  const { data, isLoading } = useTagsHook({ page, pageSize, search, filter })
+interface TagServiceParams {
+  page: number
+  pageSize: number
+  search: string
+  filter: string
+  selectedTag?: string | null
+  selectedTagId?: string | null
+}
+
+export const useTagServices = ({ page, pageSize, search, filter, selectedTagId }: TagServiceParams) => {
+  const debouncedSearch = useDebounce(search)
+
+  const { data, isLoading } = useTagsHook({ page, pageSize, search: debouncedSearch, filter })
   const createTag = useCreateTag()
   const updateTag = useUpdateTag()
   const deleteTag = useDeleteTag()
   const { data: tagDetail, isLoading: isDetailLoading, error: detailError } = useGetTagDetail(selectedTagId || '')
 
-  const [tagDetailData, setTagDetailData] = useState<any>(null)
+  const [tagDetailData, setTagDetailData] = useState<{ name: string; slug: string; featureImage: string } | null>(null)
 
-  // Cập nhật tagDetailData khi API trả về dữ liệu
   useEffect(() => {
     if (tagDetail) {
       setTagDetailData(tagDetail.data || tagDetail)
@@ -22,7 +33,7 @@ export const useTagServices = ({ page, pageSize, search, filter, selectedTagId }
     const formData = { ...values, group: 'TAG' }
 
     if (selectedTagId) {
-      updateTag.mutate({ tagId: selectedTagId.id, tagData: formData })
+      updateTag.mutate({ tagId: selectedTagId, tagData: formData })
     } else {
       createTag.mutate(formData)
     }

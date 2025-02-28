@@ -4,23 +4,29 @@ import { useEffect } from 'react'
 interface TagFormProps {
   isOpen: boolean
   onClose: () => void
-  onSubmit: (values: any, onClose: () => void) => Promise<void>
-  initialValues?: any
+  onSubmit: (values: { name: string; slug: string; featureImage?: string }, onClose: () => void) => Promise<void>
+  initialValues?: { id?: string; name: string; slug: string; featureImage?: string }
 }
 
 const TagForm = ({ isOpen, onClose, onSubmit, initialValues }: TagFormProps) => {
-  const [form] = Form.useForm()
+  const [form] = Form.useForm() // ✅ Tạo form instance
 
   useEffect(() => {
     if (isOpen) {
-      console.log('📌 Received initialValues:', initialValues)
       form.setFieldsValue(initialValues || {})
+    } else {
+      form.resetFields()
     }
   }, [isOpen, initialValues, form])
 
+  const handleClose = () => {
+    form.resetFields() // ✅ Đảm bảo reset form khi đóng modal
+    onClose()
+  }
+
   return (
-    <Modal title={initialValues?.id ? 'Cập nhật Tag' : 'Thêm Tag'} open={isOpen} onCancel={onClose} footer={null}>
-      <Form form={form} onFinish={(values) => onSubmit(values, onClose)} layout='vertical'>
+    <Modal title={initialValues?.id ? 'Cập nhật Tag' : 'Thêm Tag'} open={isOpen} onCancel={handleClose} footer={null}>
+      <Form form={form} name='tagForm' onFinish={(values) => onSubmit(values, handleClose)} layout='vertical'>
         <Form.Item name='name' label='Tên Tag' rules={[{ required: true, message: 'Vui lòng nhập tên tag!' }]}>
           <Input />
         </Form.Item>

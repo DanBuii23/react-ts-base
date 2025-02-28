@@ -41,7 +41,7 @@ const AppRoutes = () => {
           <Route path='/about' element={<AboutPage />} />
           <Route path='/categories/:id' element={<ProductList />} />
           <Route path='/categories/:id/products/:productId' element={<ProductDetail />} />
-          <Route path='/tags' element={<TagsList />} /> {/* Route mới cho TagsList */}
+          <Route path='/tags' element={<TagsList />} />
         </Route>
       </Route>
     </Routes>
