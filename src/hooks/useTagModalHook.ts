@@ -35,7 +35,6 @@ export const useTagModals = () => {
   }
 
   const openDetailModal = (tagId: string) => {
-    console.log('Open Detail Modal - Tag ID:', tagId)
     setSelectedTagId(tagId)
     setIsDetailModalOpen(true)
   }

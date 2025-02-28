@@ -13,8 +13,16 @@ const TagsList = () => {
   const { page, setPage, pageSize, setPageSize, search, handleSearch, filter, handleFilter } = usePagination()
 
   // Hook quản lý modal
-  const { isModalOpen, openModal, closeModal, isDetailModalOpen, openDetailModal, closeDetailModal, selectedTag } =
-    useTagModals()
+  const {
+    isModalOpen,
+    openModal,
+    closeModal,
+    isDetailModalOpen,
+    openDetailModal,
+    closeDetailModal,
+    selectedTag,
+    selectedTagId
+  } = useTagModals()
 
   // Hook xử lý API Tags
   const { data, isLoading, tagDetail, isDetailLoading, detailError, handleSubmit, handleDelete } = useTagServices({
@@ -22,7 +30,8 @@ const TagsList = () => {
     pageSize,
     search,
     filter,
-    selectedTag
+    selectedTag,
+    selectedTagId
   })
 
   return (
