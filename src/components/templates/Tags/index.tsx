@@ -1,9 +1,9 @@
 import { Input, Select, Button, Modal, Spin, Alert, TableColumnsType } from 'antd'
 import TagForm from '../../organisms/FormTags'
 import MTable from '../../molecules/MTable'
-import { usePagination } from '../../../hooks/usePanigationHook'
+import { usePagination } from '../../../hooks/usePanigation'
 import { TagDetailType, useTagServices } from '../../../hooks/useTagsService'
-import { useTagModals } from '../../../hooks/useTagModalHook'
+import { useTagModals } from '../../../hooks/useModal'
 import MActionButtons from '../../molecules/MButtonAction'
 import { useFunction } from '../../../hooks/useFunction'
 

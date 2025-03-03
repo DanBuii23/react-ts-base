@@ -1,4 +1,4 @@
-import { useTagsHook, useCreateTag, useUpdateTag, useDeleteTag, useGetTagDetail } from './useTagsHook'
+import { useTagsHook, useCreateTag, useUpdateTag, useDeleteTag, useGetTagDetail } from './useTagHook'
 import { message } from 'antd'
 import { useEffect, useState } from 'react'
 import { useDebounce } from '../hooks/useDebounce'
