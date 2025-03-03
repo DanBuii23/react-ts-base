@@ -7,22 +7,14 @@ export const usePagination = (initialPage = 1, initialPageSize = 10) => {
 
   const [page, setPage] = useState(pageFromUrl)
   const [pageSize, setPageSize] = useState(initialPageSize)
-  const [search, setSearch] = useState(searchParams.get('search') || '')
-  const [filter, setFilter] = useState(searchParams.get('filter') || '')
 
   useEffect(() => {
-    setSearchParams({ page: String(page), filter, search })
-  }, [page, search, filter, setSearchParams])
+    setSearchParams((prevParams) => {
+      const newParams = new URLSearchParams(prevParams)
+      newParams.set('page', String(page))
+      return newParams
+    })
+  }, [page, setSearchParams])
 
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(e.target.value)
-    setPage(1)
-  }
-
-  const handleFilter = (value: string) => {
-    setFilter(value)
-    setPage(1)
-  }
-
-  return { page, setPage, pageSize, setPageSize, search, handleSearch, filter, handleFilter }
+  return { page, setPage, pageSize, setPageSize }
 }

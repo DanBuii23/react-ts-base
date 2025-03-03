@@ -1,8 +1,10 @@
 import { Table } from 'antd'
+import { TagDetailType } from '../../../hooks/useTagsService'
+import { ColumnsType } from 'antd/es/table'
 
 interface MTableProps {
-  columns: Array<{ title: string; dataIndex: string; key: string }>
-  dataSource: Array<{ [key: string]: string | number | boolean | object }>
+  columns: ColumnsType<TagDetailType>
+  dataSource: TagDetailType[]
   loading?: boolean
   pagination?: false | object
   rowKey?: string

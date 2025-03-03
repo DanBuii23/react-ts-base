@@ -11,7 +11,14 @@ interface TagServiceParams {
   selectedTag?: string | null
   selectedTagId?: string | null
 }
-
+export interface TagDetailType {
+  id: string
+  name: string
+  slug: string
+  featureImage: string
+  totalPost: number
+  createdAt: string
+}
 export const useTagServices = ({ page, pageSize, search, filter, selectedTagId }: TagServiceParams) => {
   const debouncedSearch = useDebounce(search)
 
@@ -21,7 +28,7 @@ export const useTagServices = ({ page, pageSize, search, filter, selectedTagId }
   const deleteTag = useDeleteTag()
   const { data: tagDetail, isLoading: isDetailLoading, error: detailError } = useGetTagDetail(selectedTagId || '')
 
-  const [tagDetailData, setTagDetailData] = useState<{ name: string; slug: string; featureImage: string } | null>(null)
+  const [tagDetailData, setTagDetailData] = useState<TagDetailType | null>(null)
 
   useEffect(() => {
     if (tagDetail) {

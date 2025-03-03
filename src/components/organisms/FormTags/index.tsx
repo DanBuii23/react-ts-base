@@ -5,7 +5,7 @@ interface TagFormProps {
   isOpen: boolean
   onClose: () => void
   onSubmit: (values: { name: string; slug: string; featureImage?: string }, onClose: () => void) => Promise<void>
-  initialValues?: { id?: string; name: string; slug: string; featureImage?: string }
+  initialValues?: { id: string; name: string; slug: string; featureImage?: string }
 }
 
 const TagForm = ({ isOpen, onClose, onSubmit, initialValues }: TagFormProps) => {
