@@ -7,7 +7,7 @@ interface TagServiceParams {
   page: number
   pageSize: number
   search: string
-  filter: string
+  status: string
   selectedTag?: string | null
   selectedTagId?: string | null
 }
@@ -19,10 +19,10 @@ export interface TagDetailType {
   totalPost: number
   createdAt: string
 }
-export const useTagServices = ({ page, pageSize, search, filter, selectedTagId }: TagServiceParams) => {
+export const useTagServices = ({ page, pageSize, search, status, selectedTagId }: TagServiceParams) => {
   const debouncedSearch = useDebounce(search)
 
-  const { data, isLoading } = useTagsHook({ page, pageSize, search: debouncedSearch, filter })
+  const { data, isLoading } = useTagsHook({ page, pageSize, search: debouncedSearch, status })
   const createTag = useCreateTag()
   const updateTag = useUpdateTag()
   const deleteTag = useDeleteTag()

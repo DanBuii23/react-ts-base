@@ -5,10 +5,10 @@ export interface TagData {
   description?: string
 }
 
-export const tagsApi = async (page: number, pageSize: number, search?: string, filter?: string) => {
+export const tagsApi = async (page: number, pageSize: number, search?: string, status?: string) => {
   try {
     const response = await apiClient.get('/api/v1/cms/tags', {
-      params: { page, pageSize, s: search, filter }
+      params: { page, pageSize, s: search, status }
     })
     return response.data
   } catch (error) {

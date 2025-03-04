@@ -6,14 +6,14 @@ export const useFunction = () => {
 
   const [query, setQuery] = useState({
     search: searchParams.get('search') || '',
-    filter: searchParams.get('filter') || ''
+    status: searchParams.get('status') || ''
   })
 
   useEffect(() => {
     setSearchParams((prevParams) => {
       const newParams = new URLSearchParams(prevParams)
-      if (query.filter) newParams.set('filter', query.filter)
-      else newParams.delete('filter')
+      if (query.status) newParams.set('status', query.status)
+      else newParams.delete('status')
       if (query.search) newParams.set('search', query.search)
       else newParams.delete('search')
 
@@ -21,7 +21,7 @@ export const useFunction = () => {
     })
   }, [query, setSearchParams])
 
-  const updateQuery = (key: 'filter' | 'search', value: string) => {
+  const updateQuery = (key: 'status' | 'search', value: string) => {
     setQuery((prev) => ({
       ...prev,
       [key]: value

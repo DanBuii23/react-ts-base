@@ -5,14 +5,14 @@ interface ParamsType {
   page: number
   pageSize: number
   search: string
-  filter?: string
+  status?: string
 }
 
-export const useTagsHook = ({ page, pageSize, search, filter }: ParamsType) => {
+export const useTagsHook = ({ page, pageSize, search, status }: ParamsType) => {
   return useQuery({
-    queryKey: ['tags', page, pageSize, search, filter],
+    queryKey: ['tags', page, pageSize, search, status],
     queryFn: async () => {
-      const response = await tagsApi(page, pageSize, search, filter)
+      const response = await tagsApi(page, pageSize, search, status)
       return {
         tags: response.data.datas,
         total: response.data.total

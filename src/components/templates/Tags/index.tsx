@@ -28,7 +28,7 @@ const TagsList = () => {
     page,
     pageSize,
     search: query.search,
-    filter: query.filter,
+    status: query.status,
     selectedTagId
   })
 
@@ -64,8 +64,8 @@ const TagsList = () => {
       />
       <Select
         placeholder='Chọn trạng thái'
-        value={query.filter}
-        onChange={(value) => updateQuery('filter', value)}
+        value={query.status}
+        onChange={(value) => updateQuery('status', value)}
         allowClear
         className='m-2'
       >
