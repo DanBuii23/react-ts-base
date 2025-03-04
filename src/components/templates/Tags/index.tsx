@@ -5,14 +5,11 @@ import { usePagination } from '../../../hooks/usePanigation'
 import { TagDetailType, useTagServices } from '../../../hooks/useTagsService'
 import { useTagModals } from '../../../hooks/useModal'
 import MActionButtons from '../../molecules/MButtonAction'
-import { useFunction } from '../../../hooks/useFunction'
+import { useFilter } from '../../../hooks/useFilter'
 
 const TagsList = () => {
-  //phân trang
   const { page, setPage, pageSize, setPageSize } = usePagination()
-  //query param
-  const { query, updateQuery } = useFunction()
-  //modal
+  const { filter, updateFilter, handleFilterInURL } = useFilter()
   const {
     isModalOpen,
     openModal,
@@ -23,12 +20,13 @@ const TagsList = () => {
     selectedTag,
     selectedTagId
   } = useTagModals()
-  //API Tags
+
+  // API Tags
   const { data, isLoading, tagDetail, isDetailLoading, detailError, handleSubmit, handleDelete } = useTagServices({
     page,
     pageSize,
-    search: query.search,
-    status: query.status,
+    search: filter.search,
+    status: filter.status || '',
     selectedTagId
   })
 
@@ -49,30 +47,41 @@ const TagsList = () => {
       )
     }
   ]
+
   return (
     <div className='container mx-auto p-6'>
       <h1 className='text-2xl font-bold mb-4'>Danh sách Tags</h1>
       <Button type='primary' onClick={() => openModal()} className='m-2'>
         Thêm Tag
       </Button>
+
+      {/* Tìm kiếm */}
       <Input.Search
         placeholder='Tìm kiếm tag...'
-        value={query.search}
-        onChange={(e) => updateQuery('search', e.target.value)}
+        value={filter.search || ''}
+        onChange={(e) => updateFilter('search', e.target.value)}
         enterButton
         className='m-2 w-2/3'
       />
+
+      {/* Lọc */}
       <Select
         placeholder='Chọn trạng thái'
-        value={query.status}
-        onChange={(value) => updateQuery('status', value)}
+        value={filter.status}
+        onChange={(value) => {
+          updateFilter('status', value)
+          handleFilterInURL()
+        }}
         allowClear
         className='m-2'
       >
         <Select.Option value='available'>Trạng thái 1</Select.Option>
         <Select.Option value='unavailable'>Trạng thái 2</Select.Option>
       </Select>
+
       <hr />
+
+      {/* Hiển thị bảng */}
       <MTable
         columns={columns}
         dataSource={data?.tags || []}
@@ -87,6 +96,7 @@ const TagsList = () => {
           }
         }}
       />
+
       {/* Modal chi tiết tag */}
       <Modal
         title='Chi tiết Tag'
@@ -124,6 +134,7 @@ const TagsList = () => {
           <p>Không có dữ liệu hiển thị.</p>
         )}
       </Modal>
+
       {/* Modal Thêm/Sửa tag */}
       <TagForm
         isOpen={isModalOpen}
