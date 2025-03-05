@@ -5,6 +5,7 @@ import { usePagination } from '../../../hooks/usePanigation'
 import { TagDetailType, useTagServices } from '../../../hooks/useTagsService'
 import { useTagModals } from '../../../hooks/useModal'
 import MActionButtons from '../../molecules/MButtonAction'
+import { useEffect } from 'react'
 import { useFilter } from '../../../hooks/useFilter'
 
 const TagsList = () => {
@@ -20,14 +21,25 @@ const TagsList = () => {
     selectedTag,
     selectedTagId
   } = useTagModals()
-
   // API Tags
-  const { data, isLoading, tagDetail, isDetailLoading, detailError, handleSubmit, handleDelete } = useTagServices({
+  const {
+    data,
+    isLoading,
+    tagDetail,
+    isDetailLoading,
+    detailError,
+    handleSubmit,
+    handleDelete,
+    searchInput,
+    setSearchInput
+  } = useTagServices({
     page,
     pageSize,
-    search: filter.search,
-    status: filter.status || '',
-    selectedTagId
+    selectedTagId,
+    search: String(filter.search || ''),
+    status: String(filter.status || ''),
+    success: String(filter.success || ''),
+    ...filter
   })
 
   const columns: TableColumnsType<TagDetailType> = [
@@ -48,6 +60,11 @@ const TagsList = () => {
     }
   ]
 
+  useEffect(() => {
+    console.log(filter)
+    handleFilterInURL(filter as Record<string, string | null>)
+  }, [])
+
   return (
     <div className='container mx-auto p-6'>
       <h1 className='text-2xl font-bold mb-4'>Danh sách Tags</h1>
@@ -58,25 +75,32 @@ const TagsList = () => {
       {/* Tìm kiếm */}
       <Input.Search
         placeholder='Tìm kiếm tag...'
-        value={filter.search || ''}
-        onChange={(e) => updateFilter('search', e.target.value)}
+        value={searchInput}
+        onChange={(e) => setSearchInput(e.target.value)}
         enterButton
-        className='m-2 w-2/3'
+        className='m-2 w-1/3'
       />
 
       {/* Lọc */}
       <Select
         placeholder='Chọn trạng thái'
         value={filter.status}
-        onChange={(value) => {
-          updateFilter('status', value)
-          handleFilterInURL()
-        }}
+        onChange={(value) => updateFilter('status', String(value))}
         allowClear
         className='m-2'
       >
-        <Select.Option value='available'>Trạng thái 1</Select.Option>
-        <Select.Option value='unavailable'>Trạng thái 2</Select.Option>
+        <Select.Option value='status1'>Trạng thái 1</Select.Option>
+        <Select.Option value='status2'>Trạng thái 2</Select.Option>
+      </Select>
+      <Select
+        placeholder='Chọn trạng thái'
+        value={filter.success}
+        onChange={(value) => updateFilter('success', String(value))}
+        allowClear
+        className='m-2'
+      >
+        <Select.Option value='true'>Success</Select.Option>
+        <Select.Option value='false'>Fail</Select.Option>
       </Select>
 
       <hr />

@@ -1,18 +1,19 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { tagsApi, getTagDetailApi, createTagApi, updateTagApi, deleteTagApi, TagData } from '../apis/TagsApi'
 
-interface ParamsType {
+export interface ParamsType {
   page: number
   pageSize: number
   search: string
   status?: string
+  success?: string
 }
 
-export const useTagsHook = ({ page, pageSize, search, status }: ParamsType) => {
+export const useTagsHook = (params: ParamsType) => {
   return useQuery({
-    queryKey: ['tags', page, pageSize, search, status],
+    queryKey: ['tags', { ...params }],
     queryFn: async () => {
-      const response = await tagsApi(page, pageSize, search, status)
+      const response = await tagsApi(params)
       return {
         tags: response.data.datas,
         total: response.data.total

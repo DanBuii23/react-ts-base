@@ -1,45 +1,46 @@
-import { useState, useEffect, useCallback } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams, useNavigate } from 'react-router-dom'
+import { useMemo } from 'react'
+import queryString from 'query-string'
 
-interface Filter {
-  search: string
-  status?: string
-}
-
-export const useFilter = (initialFilters: Record<string, unknown> = {}) => {
+export const useFilter = () => {
   const [searchParams, setSearchParams] = useSearchParams()
+  const navigate = useNavigate()
 
-  const [filter, setFilter] = useState<Filter>({
-    search: searchParams.get('search') || '',
-    status: searchParams.get('status') || '',
-    ...initialFilters
-  })
-
-  const handleFilterInURL = useCallback(() => {
-    setSearchParams((prevParams) => {
-      const newParams = new URLSearchParams(prevParams)
-      Object.entries(filter).forEach(([key, value]) => {
-        if (value) {
-          newParams.set(key, String(value))
-        } else {
-          newParams.delete(key)
-        }
-      })
-      return newParams
+  const filter = useMemo(() => {
+    const searchObj = Object.fromEntries(searchParams.entries())
+    return queryString.parse(queryString.stringify(searchObj), {
+      parseNumbers: true,
+      parseBooleans: true
     })
-  }, [filter, setSearchParams])
+  }, [searchParams])
 
-  useEffect(() => {
-    handleFilterInURL()
-  }, [filter, handleFilterInURL])
+  const updateFilter = (key: string, value: string | null) => {
+    const newParams = { ...filter }
 
-  const updateFilter = (key: keyof Filter, value: string) => {
-    setFilter((prev) => ({ ...prev, [key]: value }))
+    if (!value) {
+      delete newParams[key] // Xóa nếu giá trị rỗng/null
+    } else {
+      newParams[key] = value
+    }
+
+    const queryStringified = queryString.stringify(newParams, {
+      skipEmptyString: true,
+      skipNull: true
+    })
+    setSearchParams(new URLSearchParams(queryStringified))
   }
 
-  return {
-    filter,
-    updateFilter,
-    handleFilterInURL
+  const handleFilterInURL = (newFilters: Record<string, string | null>) => {
+    const updatedParams = { ...filter, ...newFilters }
+
+    Object.keys(updatedParams).forEach((key) => {
+      if (!updatedParams[key]) delete updatedParams[key] // Xóa nếu rỗng
+    })
+    const queryStringified = queryString.stringify(updatedParams, {
+      skipEmptyString: true,
+      skipNull: true
+    })
+    navigate(queryStringified ? `?${queryStringified}` : '', { replace: true })
   }
+  return { filter, updateFilter, handleFilterInURL }
 }
