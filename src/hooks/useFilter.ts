@@ -1,11 +1,12 @@
 import { useSearchParams, useNavigate } from 'react-router-dom'
-import { useMemo } from 'react'
+import { useMemo, useEffect } from 'react'
 import queryString from 'query-string'
 
 export const useFilter = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   const navigate = useNavigate()
 
+  // ✅ Convert URL params thành object
   const filter = useMemo(() => {
     const searchObj = Object.fromEntries(searchParams.entries())
     return queryString.parse(queryString.stringify(searchObj), {
@@ -14,6 +15,7 @@ export const useFilter = () => {
     })
   }, [searchParams])
 
+  // ✅ Cập nhật URL params
   const updateFilter = (key: string, value: string | null) => {
     const newParams = { ...filter }
 
@@ -36,11 +38,17 @@ export const useFilter = () => {
     Object.keys(updatedParams).forEach((key) => {
       if (!updatedParams[key]) delete updatedParams[key] // Xóa nếu rỗng
     })
+
     const queryStringified = queryString.stringify(updatedParams, {
       skipEmptyString: true,
       skipNull: true
     })
     navigate(queryStringified ? `?${queryStringified}` : '', { replace: true })
   }
+
+  useEffect(() => {
+    setSearchParams(new URLSearchParams(queryString.stringify(filter)))
+  }, [filter])
+
   return { filter, updateFilter, handleFilterInURL }
 }

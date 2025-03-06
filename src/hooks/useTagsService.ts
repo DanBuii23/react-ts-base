@@ -7,8 +7,6 @@ interface TagServiceParams {
   page: number
   pageSize: number
   search: string
-  status: string
-  success: string
   selectedTag?: string | null
   selectedTagId?: string | null
 }
@@ -23,10 +21,9 @@ export interface TagDetailType {
 }
 
 export const useTagServices = (params: TagServiceParams) => {
-  const [searchInput, setSearchInput] = useState(params.search || '') // 🔹 State riêng cho search
-  const debouncedSearch = useDebounce(searchInput, 500) // 🔹 Debounce chỉ trên state này
+  const [searchInput, setSearchInput] = useState(params.search || '')
+  const debouncedSearch = useDebounce(searchInput)
 
-  // ✅ Gọi API với debouncedSearch thay vì params.search
   const { data, isLoading } = useTagsHook({ ...params, search: debouncedSearch })
 
   const createTag = useCreateTag()
@@ -48,7 +45,9 @@ export const useTagServices = (params: TagServiceParams) => {
   }, [tagDetail])
 
   useEffect(() => {
-    setSearchInput(params.search || '') // 🔹 Đồng bộ search với URL khi params thay đổi
+    if (params.search !== searchInput) {
+      setSearchInput(params.search || '')
+    }
   }, [params.search])
 
   const handleSubmit = async (values: { name: string; slug: string; featureImage: string }, onClose: () => void) => {
@@ -76,8 +75,8 @@ export const useTagServices = (params: TagServiceParams) => {
     tagDetail: tagDetailData,
     isDetailLoading,
     detailError,
-    searchInput, // 🔹 Trả về state này để dùng trong Input.Search
-    setSearchInput, // 🔹 Hàm cập nhật search khi nhập liệu
+    searchInput,
+    setSearchInput,
     handleSubmit,
     handleDelete
   }

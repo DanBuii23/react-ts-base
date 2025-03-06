@@ -5,8 +5,8 @@ export interface ParamsType {
   page: number
   pageSize: number
   search: string
-  status?: string
-  success?: string
+  // status?: string
+  // success?: string
 }
 
 export const useTagsHook = (params: ParamsType) => {
