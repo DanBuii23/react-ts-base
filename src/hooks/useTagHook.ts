@@ -4,7 +4,7 @@ import { tagsApi, getTagDetailApi, createTagApi, updateTagApi, deleteTagApi, Tag
 export interface ParamsType {
   page: number
   pageSize: number
-  search: string
+  s: string
   // status?: string
   // success?: string
 }

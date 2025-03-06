@@ -6,7 +6,7 @@ import { useDebounce } from '../hooks/useDebounce'
 interface TagServiceParams {
   page: number
   pageSize: number
-  search: string
+  s: string
   selectedTag?: string | null
   selectedTagId?: string | null
 }
@@ -21,10 +21,13 @@ export interface TagDetailType {
 }
 
 export const useTagServices = (params: TagServiceParams) => {
-  const [searchInput, setSearchInput] = useState(params.search || '')
+  const [searchInput, setSearchInput] = useState(params.s || '')
   const debouncedSearch = useDebounce(searchInput)
 
-  const { data, isLoading } = useTagsHook({ ...params, search: debouncedSearch })
+  const { data, isLoading } = useTagsHook({
+    ...params,
+    s: debouncedSearch
+  })
 
   const createTag = useCreateTag()
   const updateTag = useUpdateTag()
@@ -45,11 +48,10 @@ export const useTagServices = (params: TagServiceParams) => {
   }, [tagDetail])
 
   useEffect(() => {
-    if (params.search !== searchInput) {
-      setSearchInput(params.search || '')
+    if (params.s !== searchInput) {
+      setSearchInput(params.s || '')
     }
-  }, [params.search])
-
+  }, [params.s])
   const handleSubmit = async (values: { name: string; slug: string; featureImage: string }, onClose: () => void) => {
     const formData = { ...values, group: 'TAG' }
 

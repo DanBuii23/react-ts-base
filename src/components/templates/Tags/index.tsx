@@ -36,7 +36,7 @@ const TagsList = () => {
     page,
     pageSize,
     selectedTagId,
-    search: String(filter.search || ''),
+    s: String(filter.search || ''),
     ...filter
   })
 
