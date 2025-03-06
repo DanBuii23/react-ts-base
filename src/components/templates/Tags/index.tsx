@@ -59,7 +59,6 @@ const TagsList = () => {
   ]
 
   useEffect(() => {
-    console.log(filter)
     handleFilterInURL(filter as Record<string, string | null>)
   }, [])
 
@@ -99,6 +98,16 @@ const TagsList = () => {
       >
         <Select.Option value='true'>Success</Select.Option>
         <Select.Option value='false'>Fail</Select.Option>
+      </Select>
+      <Select
+        placeholder=''
+        value={filter.isActive}
+        onChange={(value) => updateFilter('isActive', String(value))}
+        allowClear
+        className='m-2'
+      >
+        <Select.Option value='yes'>lên</Select.Option>
+        <Select.Option value='no'>xuống</Select.Option>
       </Select>
 
       <hr />
