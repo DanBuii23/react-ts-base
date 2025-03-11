@@ -5,6 +5,7 @@ import apiClient from './ApiClient'
 export interface TagData {
   name: string
   description?: string
+  featureImage?: string
 }
 
 export const tagsApi = async (params: ParamsType) => {

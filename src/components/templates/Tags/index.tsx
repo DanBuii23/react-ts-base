@@ -1,5 +1,5 @@
 import { Input, Select, Button, Modal, Spin, Alert, TableColumnsType } from 'antd'
-import TagForm from '../../organisms/FormTags'
+import TagForm from '../../organisms/TagsForm'
 import MTable from '../../molecules/MTable'
 import { usePagination } from '../../../hooks/usePanigation'
 import { TagDetailType, useTagServices } from '../../../hooks/useTagsService'
