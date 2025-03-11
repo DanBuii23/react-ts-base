@@ -43,7 +43,14 @@ const TagsList = () => {
   const columns: TableColumnsType<TagDetailType> = [
     { title: 'Tên Tag', dataIndex: 'name', key: 'name' },
     { title: 'Slug', dataIndex: 'slug', key: 'slug' },
-    { title: 'Image', dataIndex: 'featureImage', key: 'featureImage' },
+    {
+      title: 'Image',
+      dataIndex: 'featureImage',
+      key: 'featureImage',
+      render: (src: string) => (
+        <img src={src} alt='Tag Image' style={{ width: 80, height: 50, objectFit: 'cover', borderRadius: 5 }} />
+      )
+    },
     { title: 'Tổng bài viết', dataIndex: 'totalPost', key: 'totalPost' },
     {
       title: 'Thao tác',
