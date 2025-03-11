@@ -1,3 +1,4 @@
+import { API_VERSION } from '../constants'
 import apiClient from './ApiClient'
 
 interface LoginParams {
@@ -6,6 +7,6 @@ interface LoginParams {
 }
 
 export const loginApi = async ({ email, password }: LoginParams) => {
-  const response = await apiClient.post('/api/v1/cms/auths/login', { email, password })
+  const response = await apiClient.post(`${API_VERSION}/auths/login`, { email, password })
   return response.data
 }

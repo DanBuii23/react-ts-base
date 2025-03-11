@@ -53,7 +53,7 @@ export const useTagServices = (params: TagServiceParams) => {
     }
   }, [params.s])
   const handleSubmit = async (values: { name: string; slug: string; featureImage: string }, onClose: () => void) => {
-    const formData = { ...values, group: 'TAG' }
+    const formData = { ...values }
 
     if (params.selectedTagId) {
       updateTag.mutate({ tagId: params.selectedTagId, tagData: formData })

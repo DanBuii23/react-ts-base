@@ -1,15 +1,17 @@
 import { Form, Input, Button, Modal } from 'antd'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import MUploadImage from '../../molecules/MUploadImage'
 
 interface TagFormProps {
   isOpen: boolean
   onClose: () => void
   onSubmit: (values: { name: string; slug: string; featureImage?: string }, onClose: () => void) => Promise<void>
-  initialValues?: { id: string; name: string; slug: string; featureImage?: string }
+  initialValues: { id: string; name: string; slug: string; featureImage?: string }
 }
 
 const TagForm = ({ isOpen, onClose, onSubmit, initialValues }: TagFormProps) => {
-  const [form] = Form.useForm() // ✅ Tạo form instance
+  const [form] = Form.useForm()
+  const [uploading, setUploading] = useState(false)
 
   useEffect(() => {
     if (isOpen) {
@@ -20,7 +22,7 @@ const TagForm = ({ isOpen, onClose, onSubmit, initialValues }: TagFormProps) => 
   }, [isOpen, initialValues, form])
 
   const handleClose = () => {
-    form.resetFields() // ✅ Đảm bảo reset form khi đóng modal
+    form.resetFields()
     onClose()
   }
 
@@ -35,12 +37,19 @@ const TagForm = ({ isOpen, onClose, onSubmit, initialValues }: TagFormProps) => 
           <Input />
         </Form.Item>
 
-        <Form.Item name='featureImage' label='Ảnh nổi bật'>
-          <Input />
+        {/* Sử dụng MUploadImage thay cho input ảnh */}
+        <Form.Item name='featureImage' label='Ảnh đại diện'>
+          <MUploadImage
+            name='featureImage'
+            label='Ảnh đại diện'
+            form={form}
+            initialValues={initialValues}
+            setUploading={setUploading}
+          />
         </Form.Item>
 
         <Form.Item>
-          <Button type='primary' htmlType='submit' className='w-full'>
+          <Button type='primary' htmlType='submit' className='w-full' disabled={uploading}>
             {initialValues?.id ? 'Cập nhật' : 'Thêm mới'}
           </Button>
         </Form.Item>

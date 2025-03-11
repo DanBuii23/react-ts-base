@@ -96,11 +96,11 @@ const TagsList = () => {
         allowClear
         className='m-2'
       >
-        <Select.Option value='true'>Success</Select.Option>
-        <Select.Option value='false'>Fail</Select.Option>
+        <Select.Option value='yes'>Yes</Select.Option>
+        <Select.Option value='no'>No</Select.Option>
       </Select>
       <Select
-        placeholder=''
+        placeholder='Chọn trạng thái'
         value={filter.isActive}
         onChange={(value) => updateFilter('isActive', String(value))}
         allowClear
@@ -152,8 +152,24 @@ const TagsList = () => {
               <strong>Slug:</strong> {tagDetail.slug}
             </p>
             <p>
-              <strong>Image:</strong> {tagDetail.featureImage}
+              <strong>Image:</strong>
+              {tagDetail.featureImage ? (
+                <img
+                  src={tagDetail.featureImage}
+                  alt={tagDetail.name}
+                  style={{
+                    width: '100%',
+                    maxHeight: '300px',
+                    objectFit: 'cover',
+                    borderRadius: '8px',
+                    marginTop: '8px'
+                  }}
+                />
+              ) : (
+                <p>Không có ảnh</p>
+              )}
             </p>
+
             <p>
               <strong>Tổng bài viết:</strong> {tagDetail.totalPost}
             </p>

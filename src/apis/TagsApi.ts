@@ -1,3 +1,4 @@
+import { API_VERSION } from '../constants'
 import { ParamsType } from '../hooks/useTagHook'
 import apiClient from './ApiClient'
 
@@ -7,33 +8,28 @@ export interface TagData {
 }
 
 export const tagsApi = async (params: ParamsType) => {
-  try {
-    const response = await apiClient.get('/api/v1/cms/tags', {
-      params
-    })
-    return response.data
-  } catch (error) {
-    console.error('Lỗi khi gọi API:', error)
-    throw error
-  }
+  const response = await apiClient.get(`${API_VERSION}/tags`, {
+    params
+  })
+  return response.data
 }
 
 export const getTagDetailApi = async (tagId: string) => {
-  const response = await apiClient.get(`/api/v1/cms/tags/${tagId}`)
+  const response = await apiClient.get(`${API_VERSION}/tags/${tagId}`)
   return response.data
 }
 
 export const createTagApi = async (tagData: TagData) => {
-  const response = await apiClient.post('/api/v1/cms/tags', tagData)
+  const response = await apiClient.post(`${API_VERSION}/tags`, tagData)
   return response.data
 }
 
 export const updateTagApi = async (tagId: string, tagData: TagData) => {
-  const response = await apiClient.put(`/api/v1/cms/tags/${tagId}`, tagData)
+  const response = await apiClient.put(`${API_VERSION}/tags/${tagId}`, tagData)
   return response.data
 }
 
 export const deleteTagApi = async (tagId: string) => {
-  const response = await apiClient.delete(`/api/v1/cms/tags/${tagId}`)
+  const response = await apiClient.delete(`${API_VERSION}/tags/${tagId}`)
   return response.data
 }

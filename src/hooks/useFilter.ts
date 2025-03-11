@@ -6,7 +6,6 @@ export const useFilter = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   const navigate = useNavigate()
 
-  // ✅ Convert URL params thành object
   const filter = useMemo(() => {
     const searchObj = Object.fromEntries(searchParams.entries())
     return queryString.parse(queryString.stringify(searchObj), {
@@ -15,7 +14,6 @@ export const useFilter = () => {
     })
   }, [searchParams])
 
-  // ✅ Cập nhật URL params
   const updateFilter = (key: string, value: string | null) => {
     const newParams = { ...filter }
 
