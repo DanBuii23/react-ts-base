@@ -47,13 +47,10 @@ const TagsList = () => {
       title: 'Image',
       dataIndex: 'featureImage',
       key: 'featureImage',
-      render: (src: string) => (
-        <img
-          src={src}
-          alt='Tag Image'
-          // style={{ width: 80, height: 60, objectFit: 'cover', borderRadius: 5 }}
-          className='w-[80px] h-[60px] object-cover rounded-lg'
-        />
+      render: (src?: string) => (
+        <div className='w-[60px] h-[60px] flex items-center justify-center'>
+          {src ? <img src={src} alt='Tag Image' className='w-[60px] h-[60px] object-cover rounded-full' /> : null}
+        </div>
       )
     },
     { title: 'Tổng bài viết', dataIndex: 'totalPost', key: 'totalPost' },
@@ -169,7 +166,7 @@ const TagsList = () => {
                 <img
                   src={tagDetail.featureImage}
                   alt={tagDetail.name}
-                  className='w-full max-h-[280px] object-cover rounded-lg m-2'
+                  className='w-full max-h-[200px] object-contain rounded-lg m-2'
                 />
               ) : (
                 <p>Không có ảnh</p>
