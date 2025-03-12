@@ -1,5 +1,4 @@
 import { Input, Select, Button, Modal, Spin, Alert, TableColumnsType } from 'antd'
-import TagForm from '../../organisms/TagsForm'
 import MTable from '../../molecules/MTable'
 import { usePagination } from '../../../hooks/usePanigation'
 import { TagDetailType, useTagServices } from '../../../hooks/useTagsService'
@@ -7,6 +6,7 @@ import { useTagModals } from '../../../hooks/useModal'
 import MActionButtons from '../../molecules/MButtonAction'
 import { useEffect } from 'react'
 import { useFilter } from '../../../hooks/useFilter'
+import MForm from '../../organisms/MForm'
 
 const TagsList = () => {
   const { page, setPage, pageSize, setPageSize } = usePagination()
@@ -48,7 +48,7 @@ const TagsList = () => {
       dataIndex: 'featureImage',
       key: 'featureImage',
       render: (src: string) => (
-        <img src={src} alt='Tag Image' style={{ width: 80, height: 50, objectFit: 'cover', borderRadius: 5 }} />
+        <img src={src} alt='Tag Image' style={{ width: 80, height: 60, objectFit: 'cover', borderRadius: 5 }} />
       )
     },
     { title: 'Tổng bài viết', dataIndex: 'totalPost', key: 'totalPost' },
@@ -190,11 +190,23 @@ const TagsList = () => {
       </Modal>
 
       {/* Modal Thêm/Sửa tag */}
-      <TagForm
+      <MForm
         isOpen={isModalOpen}
         onClose={closeModal}
-        onSubmit={(values, onClose) => handleSubmit({ ...values, featureImage: values.featureImage || '' }, onClose)}
-        initialValues={selectedTag ? { ...selectedTag } : { id: '', name: '', slug: '', featureImage: '' }}
+        modalTitle={selectedTag?.id ? 'Cập nhật Tag' : 'Thêm Tag'}
+        onFinish={(values) => handleSubmit(values, closeModal)}
+        initialValues={selectedTag ?? {}}
+        fields={[
+          {
+            label: 'Tên Tag',
+            name: 'name',
+            type: 'text',
+            rules: [{ required: true, message: 'Vui lòng nhập tên tag!' }]
+          },
+          { label: 'Slug', name: 'slug', type: 'text', rules: [{ required: true, message: 'Vui lòng nhập slug!' }] },
+          { label: 'Ảnh đại diện', name: 'featureImage', type: 'upload' }
+        ]}
+        buttonText={selectedTag?.id ? 'Cập nhật' : 'Thêm mới'}
       />
     </div>
   )

@@ -1,44 +1,84 @@
-import { Form, Input, FormProps, Upload } from 'antd'
-import { UploadOutlined } from '@ant-design/icons'
-import { MButton } from '../../atoms'
+import { Form, Input, Button, Modal, FormProps } from 'antd'
+import { useEffect, useState } from 'react'
+import MUploadImage from '../../molecules/MUploadImage'
 
 interface MFormProps extends FormProps {
+  isOpen?: boolean
+  onClose?: () => void
+  modalTitle?: string
   loading?: boolean
   fields: {
     label: string
     name: string
-    type?: 'text' | 'password' | 'file'
+    type?: 'text' | 'password' | 'upload'
     rules?: object[]
   }[]
   buttonText?: string
+  // initialValues?: Record<string, any>
+  resetOnOpen?: boolean
 }
 
-const MForm = ({ loading, fields, buttonText = 'Submit', ...formProps }: MFormProps) => {
-  return (
-    <Form {...formProps} layout='vertical'>
+const MForm = ({
+  isOpen,
+  onClose,
+  modalTitle,
+  loading,
+  fields,
+  buttonText = 'Submit',
+  initialValues = {},
+  ...formProps
+}: MFormProps) => {
+  const [form] = Form.useForm()
+  const [uploading, setUploading] = useState(false)
+
+  useEffect(() => {
+    if (isOpen) {
+      form.setFieldsValue(initialValues || { name: '', slug: '', featureImage: '' }) // Reset nếu thêm mới
+    } else {
+      form.resetFields()
+    }
+  }, [isOpen, initialValues, form])
+
+  const handleClose = () => {
+    form.resetFields()
+    onClose?.()
+  }
+
+  const formContent = (
+    <Form form={form} layout='vertical' {...formProps}>
       {fields.map(({ label, name, type = 'text', rules }) => (
-        <Form.Item
-          key={name}
-          label={label}
-          name={name}
-          rules={rules}
-          valuePropName={type === 'file' ? 'fileList' : 'value'}
-        >
+        <Form.Item key={name} label={label} name={name} rules={rules}>
           {type === 'password' ? (
             <Input.Password />
-          ) : type === 'file' ? (
-            <Upload beforeUpload={() => false} listType='picture'>
-              <MButton icon={<UploadOutlined />}>Upload</MButton>
-            </Upload>
+          ) : type === 'upload' ? (
+            <MUploadImage
+              key={initialValues?.id || ''}
+              name={name}
+              label={label}
+              form={form}
+              initialValues={initialValues}
+              setUploading={setUploading}
+            />
           ) : (
             <Input />
           )}
         </Form.Item>
       ))}
-      <MButton type='primary' htmlType='submit' block loading={loading}>
-        {buttonText}
-      </MButton>
+
+      <Form.Item>
+        <Button type='primary' htmlType='submit' block loading={loading || uploading}>
+          {buttonText}
+        </Button>
+      </Form.Item>
     </Form>
+  )
+
+  return isOpen !== undefined ? (
+    <Modal title={modalTitle} open={isOpen} onCancel={handleClose} footer={null}>
+      {formContent}
+    </Modal>
+  ) : (
+    formContent
   )
 }
 
