@@ -68,7 +68,7 @@ const MUploadImage: React.FC<MUploadImageProps> = ({ name, initialValues, form, 
       message.error('Tải ảnh lên thất bại! Vui lòng thử lại.')
       setUploading(false)
     }
-  }, [isPending, isError, isSuccess, data, form])
+  }, [isPending, isError, isSuccess, name, data, form, setUploading])
 
   return (
     <Upload
@@ -82,7 +82,7 @@ const MUploadImage: React.FC<MUploadImageProps> = ({ name, initialValues, form, 
       {fileList.length === 0 && (
         <div>
           <PlusOutlined />
-          <div className='mt-8'>Tải ảnh lên</div>
+          <p>Tải ảnh lên</p>
         </div>
       )}
     </Upload>

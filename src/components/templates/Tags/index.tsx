@@ -163,11 +163,7 @@ const TagsList = () => {
             <p>
               <strong>Image:</strong>
               {tagDetail.featureImage ? (
-                <img
-                  src={tagDetail.featureImage}
-                  alt={tagDetail.name}
-                  className='w-full max-h-[200px] object-contain rounded-lg m-2'
-                />
+                <img src={tagDetail.featureImage} alt={tagDetail.name} className='object-contain rounded-2xl m-2' />
               ) : (
                 <p>Không có ảnh</p>
               )}
