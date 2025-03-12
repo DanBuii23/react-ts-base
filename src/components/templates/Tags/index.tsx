@@ -47,7 +47,14 @@ const TagsList = () => {
       title: 'Image',
       dataIndex: 'featureImage',
       key: 'featureImage',
-      render: (src: string) => <img src={src} alt='Tag Image' className='w-80 h-80 object-cover rounded-lg' />
+      render: (src: string) => (
+        <img
+          src={src}
+          alt='Tag Image'
+          // style={{ width: 80, height: 60, objectFit: 'cover', borderRadius: 5 }}
+          className='w-[80px] h-[60px] object-cover rounded-lg'
+        />
+      )
     },
     { title: 'Tổng bài viết', dataIndex: 'totalPost', key: 'totalPost' },
     {
