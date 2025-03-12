@@ -8,7 +8,7 @@ interface TagType {
   totalPost: number
 }
 
-export const useTagModals = () => {
+export const useModals = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false)
   const [selectedTag, setSelectedTag] = useState<TagType | null>(null)

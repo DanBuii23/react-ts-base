@@ -82,7 +82,7 @@ const MUploadImage: React.FC<MUploadImageProps> = ({ name, initialValues, form, 
       {fileList.length === 0 && (
         <div>
           <PlusOutlined />
-          <div style={{ marginTop: 8 }}>Tải ảnh lên</div>
+          <div className='mt-8'>Tải ảnh lên</div>
         </div>
       )}
     </Upload>

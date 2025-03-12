@@ -2,7 +2,7 @@ import { Input, Select, Button, Modal, Spin, Alert, TableColumnsType } from 'ant
 import MTable from '../../molecules/MTable'
 import { usePagination } from '../../../hooks/usePanigation'
 import { TagDetailType, useTagServices } from '../../../hooks/useTagsService'
-import { useTagModals } from '../../../hooks/useModal'
+import { useModals } from '../../../hooks/useModal'
 import MActionButtons from '../../molecules/MButtonAction'
 import { useEffect } from 'react'
 import { useFilter } from '../../../hooks/useFilter'
@@ -20,7 +20,7 @@ const TagsList = () => {
     closeDetailModal,
     selectedTag,
     selectedTagId
-  } = useTagModals()
+  } = useModals()
   // API Tags
   const {
     data,
@@ -47,9 +47,7 @@ const TagsList = () => {
       title: 'Image',
       dataIndex: 'featureImage',
       key: 'featureImage',
-      render: (src: string) => (
-        <img src={src} alt='Tag Image' style={{ width: 80, height: 60, objectFit: 'cover', borderRadius: 5 }} />
-      )
+      render: (src: string) => <img src={src} alt='Tag Image' className='w-80 h-80 object-cover rounded-lg' />
     },
     { title: 'Tổng bài viết', dataIndex: 'totalPost', key: 'totalPost' },
     {
@@ -164,13 +162,7 @@ const TagsList = () => {
                 <img
                   src={tagDetail.featureImage}
                   alt={tagDetail.name}
-                  style={{
-                    width: '100%',
-                    maxHeight: '300px',
-                    objectFit: 'cover',
-                    borderRadius: '8px',
-                    marginTop: '8px'
-                  }}
+                  className='w-full max-h-[280px] object-cover rounded-lg m-2'
                 />
               ) : (
                 <p>Không có ảnh</p>
