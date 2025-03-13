@@ -48,9 +48,7 @@ export const useTagServices = (params: TagServiceParams) => {
   }, [tagDetail])
 
   useEffect(() => {
-    if (params.s !== searchInput) {
-      setSearchInput(params.s || '')
-    }
+    setSearchInput(params.s || '')
   }, [params.s])
   const handleSubmit = async (values: { name: string; slug: string; featureImage: string }, onClose: () => void) => {
     const formData = { ...values }

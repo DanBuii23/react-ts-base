@@ -1,4 +1,3 @@
-import React from 'react'
 import { Layout } from 'antd'
 import { Link, NavLink } from 'react-router-dom'
 import Search from 'antd/es/transfer/search'
@@ -10,7 +9,7 @@ const { Header } = Layout
 const AppHeader = () => {
   const { logout } = useAuth()
   return (
-    <Header className='mx-auto flex justify-between items-center bg-sky-900 shadow-md px-6'>
+    <Header className='mx-auto flex justify-between items-center bg-sky-900 shadow-md px-6 gap-3'>
       <div className='basis-1/3 flex gap-10 justify-center '>
         <Link className='flex items-center gap-2 text-white text-2xl font-bold' to={'/'}>
           <img src={imglogo} alt='Techno' className='h-14 rounded-md' />

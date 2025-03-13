@@ -1,5 +1,5 @@
-import React from 'react'
 import { Button, Popconfirm } from 'antd'
+import { memo } from 'react'
 
 interface MActionButtonsProps {
   onDetail: () => void
@@ -21,4 +21,4 @@ const MActionButtons = ({ onDetail, onEdit, onDelete }: MActionButtonsProps) => 
   )
 }
 
-export default MActionButtons
+export default memo(MActionButtons)

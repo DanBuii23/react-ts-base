@@ -1,4 +1,4 @@
-import { Input, Select, Button, Modal, Spin, Alert, TableColumnsType } from 'antd'
+import { Input, Select, Modal, Spin, Alert, TableColumnsType, Button } from 'antd'
 import MTable from '../../molecules/MTable'
 import { usePagination } from '../../../hooks/usePanigation'
 import { TagDetailType, useTagServices } from '../../../hooks/useTagsService'
@@ -69,7 +69,7 @@ const TagsList = () => {
 
   useEffect(() => {
     handleFilterInURL(filter as Record<string, string | null>)
-  }, [])
+  }, [filter, handleFilterInURL])
 
   return (
     <div className='container mx-auto p-6'>
@@ -91,17 +91,18 @@ const TagsList = () => {
       <Select
         placeholder='Chọn trạng thái'
         value={filter.status}
-        onChange={(value) => updateFilter('status', String(value))}
+        onChange={() => updateFilter('status', null)}
         allowClear
         className='m-2'
       >
         <Select.Option value='status1'>Trạng thái 1</Select.Option>
         <Select.Option value='status2'>Trạng thái 2</Select.Option>
       </Select>
+
       <Select
         placeholder='Chọn trạng thái'
         value={filter.success}
-        onChange={(value) => updateFilter('success', String(value))}
+        onChange={() => updateFilter('success', null)}
         allowClear
         className='m-2'
       >
@@ -111,7 +112,7 @@ const TagsList = () => {
       <Select
         placeholder='Chọn trạng thái'
         value={filter.isActive}
-        onChange={(value) => updateFilter('isActive', String(value))}
+        onChange={() => updateFilter('isActive', null)}
         allowClear
         className='m-2'
       >
@@ -177,29 +178,33 @@ const TagsList = () => {
             </p>
           </div>
         ) : (
-          <p>Không có dữ liệu hiển thị.</p>
+          <div>Không có dữ liệu.</div>
         )}
       </Modal>
 
       {/* Modal Thêm/Sửa tag */}
-      <MForm
-        isOpen={isModalOpen}
-        onClose={closeModal}
-        modalTitle={selectedTag?.id ? 'Cập nhật Tag' : 'Thêm Tag'}
-        onFinish={(values) => handleSubmit(values, closeModal)}
-        initialValues={selectedTag ?? {}}
-        fields={[
-          {
-            label: 'Tên Tag',
-            name: 'name',
-            type: 'text',
-            rules: [{ required: true, message: 'Vui lòng nhập tên tag!' }]
-          },
-          { label: 'Slug', name: 'slug', type: 'text', rules: [{ required: true, message: 'Vui lòng nhập slug!' }] },
-          { label: 'Ảnh đại diện', name: 'featureImage', type: 'upload' }
-        ]}
-        buttonText={selectedTag?.id ? 'Cập nhật' : 'Thêm mới'}
-      />
+      <Modal
+        title={selectedTag?.id ? 'Cập nhật Tag' : 'Thêm Tag'}
+        open={isModalOpen}
+        onCancel={closeModal}
+        footer={null}
+      >
+        <MForm
+          onFinish={(values) => handleSubmit(values, closeModal)}
+          initialValues={selectedTag ?? {}}
+          fields={[
+            {
+              label: 'Tên Tag',
+              name: 'name',
+              type: 'text',
+              rules: [{ required: true, message: 'Vui lòng nhập tên tag!' }]
+            },
+            { label: 'Slug', name: 'slug', type: 'text', rules: [{ required: true, message: 'Vui lòng nhập slug!' }] },
+            { label: 'Ảnh đại diện', name: 'featureImage', type: 'upload' }
+          ]}
+          buttonText={selectedTag?.id ? 'Cập nhật' : 'Thêm mới'}
+        />
+      </Modal>
     </div>
   )
 }
